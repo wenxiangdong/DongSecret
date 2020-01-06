@@ -1,4 +1,4 @@
-import './app.css';
+import './app.less';
 
 const App = props => props.children;
 

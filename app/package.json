@@ -14,7 +14,9 @@
     "build": "NODE_ENV=production remax build -t wechat"
   },
   "dependencies": {
+    "@vant/weapp": "^1.0.2",
     "clsx": "^1.0.4",
+    "less": "^3.10.3",
     "react": "^16.8.6",
     "remax": "^1.1.0",
     "remax-cli": "^1.1.0",
