@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useCallback } from 'react';
 import {View} from 'remax/wechat';
 import Tabbar from '@vant/weapp/dist/tabbar';
 import TabbarItem from '@vant/weapp/dist/tabbar-item';
+import Transition from '@vant/weapp/dist/transition';
 import config from './config';
 import styles from './index.module.less';
 
@@ -12,24 +13,38 @@ export default (props) => {
         setCurrentTab(prevTab => (prevTabRef.current = prevTab, detail));
     }, []);
 
-    const component = useMemo(() => {
-        const nextPage = config.pages[currentTab];
-        const transitionName = nextPage > prevTabRef.current ? 'fade-right' : 'fade-left';
-        if (nextPage) {
-            const Com = nextPage.component;
-            return (
-                // <Transition show={true} name={transitionName}>
-                    <Com {...props} />
-                // </Transition>
-            );
-        }
-        return null;
+    const components = useMemo(() => {
+        const {pages} = config;
+        const getTransitionName = (index) => index > prevTabRef.current ? 'slide-right' : 'slide-left';
+        return (
+            <>
+            {
+                pages.map((page, index) => {
+                    const Com = page.component;
+                    const transition = getTransitionName(index);
+                    return (
+                        <Transition 
+                        key={page.name} 
+                        name={transition} 
+                        duration={{enter: 500, leave: 0}}
+                        show={index === currentTab}
+                        enter-class={styles.tabEnterActive}>
+                            <View className={styles.tabItem}>
+                                <Com {...props} />
+                            </View>
+                        </Transition>
+                    )
+                })
+            }
+            </>
+        );
     } , [currentTab, props]);
     return (
         <View>
-            {component}
+            {components}
             <View className={styles.gap} />
-            <Tabbar 
+            <Tabbar
+            z-index={20} 
             active={currentTab}
             fixed={true} 
             border={true}
