@@ -1,18 +1,23 @@
 import './app.less';
 import React from 'react';
-import { UserContainer } from './stores/user';
-import { AppContainer } from './stores/app';
+import { UserStore } from './stores/user';
+import { AppStore } from './stores/app';
 import { composeContainerProviders } from './utils/container-provider-helper';
+import { PasswordStore } from './stores/password';
 
 const StoreProvider = composeContainerProviders(
     {
-        ContainerProvider: UserContainer.Provider,
+        ContainerProvider: UserStore.Provider,
         initState: {},
     },
     {
-        ContainerProvider: AppContainer.Provider,
+        ContainerProvider: AppStore.Provider,
         initState: {},
-    }
+    },
+    {
+        ContainerProvider: PasswordStore.Provider,
+        initState: undefined,
+    },
 )
 const App = props => {
     return (

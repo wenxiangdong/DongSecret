@@ -6,5 +6,5 @@ const useUser = () => {
     return [user];
 }
 
-export const UserContainer = createContainer(useUser);
+export const UserStore = createContainer(useUser);
 
