@@ -3,12 +3,18 @@ import { View, Button } from 'remax/wechat';
 import { fromJS } from 'immutable';
 import styles from './index.module.less';
 import SecretDetail from '../../../components/SecretDetail';
-const secret = fromJS({password: 'password', name: '英雄'});
+import useLogger from '../../../hooks/use-logger';
+import { useContainer } from 'unstated-next';
+import { SecretsStore } from '../../../stores/secrets';
 
-export default () => {
-    const handleClick = () => {
-        
-    }
+
+export default (props) => {
+    const log = useLogger('secret/detail/index');
+
+    const {getItem} = useContainer(SecretsStore);
+    const secret = getItem(props.location.query.id);
+    log(secret);
+
     return (
     <View className={styles.wrapper}>
         <SecretDetail secret={secret} />

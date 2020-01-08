@@ -1,10 +1,17 @@
-import {createContainer} from 'unstated-next';
+import {createContainer, useContainer} from 'unstated-next';
 import {useState, useCallback, useMemo} from 'react';
 import {fromJS, Record, List, Map} from 'immutable';
 /**
  * @typedef {Record<import("../index").SecretType>} SecretItem
+ *
+ */
+/**
+ * @typedef {{clearList;add;setAll;updateItem;remove;getItem;secrets: List<>}} SecretsStoreValue
  */
 
+ /**
+  * @type {() => SecretsStoreValue}
+  */
 const useSecrets = () => {
     /** 
      * @typedef {Map<string, SecretItem>} SecretMap
@@ -52,7 +59,7 @@ const useSecrets = () => {
     /**
      * @type {(id: string) => SecretItem}
      */
-    const getItem = useCallback((id) => secretMap.get(id) || Record(), [secretMap]);
+    const getItem = useCallback((id) => secretMap.get(id), [secretMap]);
 
     return {
         clearList,
@@ -64,3 +71,8 @@ const useSecrets = () => {
         secrets: secretList,
     };
 };
+
+/**
+ * @type {import('unstated-next').Container<SecretsStoreValue>}
+ */
+export const SecretsStore = createContainer(useSecrets);

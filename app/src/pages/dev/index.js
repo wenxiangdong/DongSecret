@@ -3,7 +3,7 @@ import { ROUTES } from "../../constants";
 
 export default function() {
     redirectTo({
-        url: ROUTES.SECRET_DETAIL
+        url: ROUTES.SECRET_DETAIL + "?id=1000"
     })
     return null;
 }
