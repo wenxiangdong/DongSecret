@@ -53,7 +53,7 @@ export default function(props) {
                 <Button 
                     bindtap={decode}
                     type="primary"
-                    disabled={decoding}>
+                    >
                     解码
                 </Button>
             );
