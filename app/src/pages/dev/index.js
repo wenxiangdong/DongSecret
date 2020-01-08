@@ -1,9 +1,10 @@
+import React from 'react';
 import { redirectTo } from "remax/wechat";
 import { ROUTES } from "../../constants";
+import SecretListContainer from '../../containers/SecretListContainer';
+import useLogger from '../../hooks/use-logger';
 
 export default function() {
-    redirectTo({
-        url: ROUTES.SECRET_DETAIL + "?id=1000"
-    })
-    return null;
+    useLogger('dev', {auto: true});
+    return <SecretListContainer />;
 }

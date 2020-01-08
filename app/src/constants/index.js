@@ -4,3 +4,12 @@ export const ROUTES = {
     SECRET_DETAIL: '/pages/secret/detail/index',
 
 }
+
+export const COLOR_LIST = [
+    "#03A9F4",
+    "#4CAF50",
+    "#8BC34A",
+    "#FFC107",
+    "#FF9800",
+    "#FF7043",
+]
