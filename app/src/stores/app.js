@@ -6,5 +6,5 @@ const useApp = () => {
     return [app];
 }
 
-export const AppContainer = createContainer(useApp);
+export const AppStore = createContainer(useApp);
 

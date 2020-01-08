@@ -9,9 +9,9 @@ const config = {
             icon: 'home-o',
         },
         {
-            name: 'me',
+            name: 'setting',
             component: Me,
-            icon: 'star-o',
+            icon: 'setting-o',
         },
     ],
     selectedColor: "#07c160",

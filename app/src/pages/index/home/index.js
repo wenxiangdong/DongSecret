@@ -1,7 +1,18 @@
-import React from 'react';
-import { View } from 'remax/wechat';
+import React, { useEffect } from 'react';
+import { View, Button } from 'remax/wechat';
 import styles from './index.module.less';
+import SecretItem from '../../../components/index/SecretItem';
+import { fromJS } from 'immutable';
+const secret = fromJS({password: 'password', name: '英雄'});
 
 export default () => {
-    return (<View className={styles.wrapper}>Hello Home</View>);
+    const handleClick = () => {
+        
+    }
+    return (
+    <View className={styles.wrapper}>
+        <Button onClick={handleClick}>Hello Home</Button>
+        <SecretItem secret={secret} />
+    </View>
+    );
 }
