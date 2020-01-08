@@ -21,9 +21,7 @@ export default function(password) {
     /**
      * 解码 api 调用
      */
-    const decodeApiAsync = useCallback(() => {
-        API.decode(password);
-    }, [password]);
+    const decodeApiAsync = useCallback(async () => API.decode(password), [password]);
 
     /**
      * use async
@@ -32,10 +30,9 @@ export default function(password) {
     /**
      * 向外暴露的解码方法
      */
-    const decode = useCallback(() => {
-        console.log('decoding...');
+    const decode = useCallback(async () => {
         if (checkIfExistGlobalPassword()) {
-            call();
+            return call();
         }
     }, [call, checkIfExistGlobalPassword]);
 

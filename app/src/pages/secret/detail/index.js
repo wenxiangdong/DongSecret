@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Button } from 'remax/wechat';
-import styles from './index.module.less';
 import { fromJS } from 'immutable';
+import styles from './index.module.less';
+import SecretDetail from '../../../components/SecretDetail';
+const secret = fromJS({password: 'password', name: '英雄'});
 
 export default () => {
     const handleClick = () => {
@@ -9,8 +11,7 @@ export default () => {
     }
     return (
     <View className={styles.wrapper}>
-        <Button onClick={handleClick}>Hello Home</Button>
-        
+        <SecretDetail secret={secret} />
     </View>
     );
 }
