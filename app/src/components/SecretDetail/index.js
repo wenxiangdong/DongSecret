@@ -73,8 +73,15 @@ export default function(props) {
         );
     }, [displayPassword]);
 
+    const header = useMemo(() => (
+        <View slot="header" className={styles.header}>
+            {secret.get('name')}
+        </View>
+    ), [secret]);
+
     return (
-        <Panel title={secret.get('name')}>
+        <Panel>
+            {header}
             <Cell title="密码" value={displayPassword}>
             </Cell>
             <View className={styles.rightButtonGroup}>
