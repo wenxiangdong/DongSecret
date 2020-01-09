@@ -36,8 +36,8 @@ const useSecrets = () => {
     }, []);
 
     /** 更新全部 */
-    const setAll = useCallback((...secrets) => {
-        setSecretMap(preMap => secrets.reduce(
+    const setAll = useCallback((secrets) => {
+        setSecretMap(secrets.reduce(
             (result, cur) => result.set(cur.get('_id'), cur),
             Map()
         ));
@@ -59,7 +59,10 @@ const useSecrets = () => {
     /**
      * @type {(id: string) => SecretItem}
      */
-    const getItem = useCallback((id) => secretMap.get(id), [secretMap]);
+    const getItem = (id) => {
+        console.log("get item", secretMap.toJS())
+        return secretMap.get(id);
+    }
 
     return {
         clearList,

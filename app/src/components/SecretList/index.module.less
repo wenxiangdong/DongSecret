@@ -1,10 +1,19 @@
+@radius: 20px;
+@list-padding: 8Px;
 .itemWrapper {
     box-sizing: border-box;
     width: 100%;
     padding: 1em;
     color: white;
-    border-radius: 20px;
+    border-radius: @radius;
+    border-top-left-radius: 0;
     font-size: var(--font-size-md, 28rpx);
+
+    .itemContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
 
     .name {
         font-size: 1.5em;
@@ -15,20 +24,24 @@
 .list {
     box-sizing: border-box;
     width: 100%;
-    padding: 0 8Px;
+    padding: @list-padding;
 
-    .slideUpIn {
-        animation: slideUp 0.5s ease;
+    .noSecret {
+        text-align: center;
+        color: var(--text-color);
     }
+}
 
-    @keyframes slideUp {
-        from {
-            transform: translateY(50%);
-            opacity: 0.3;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1.0;
-        }
-    }
+.addWrapper {
+    border: var(--blue) 1Px dashed;
+    border-radius: @radius;
+    color: var(--blue);
+    font-size: 64rpx;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 16rpx;
+    margin: @list-padding;
 }

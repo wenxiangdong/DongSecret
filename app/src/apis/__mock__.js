@@ -4,10 +4,10 @@ const timeout = (duration = 1500) => new Promise(r => setTimeout(r, duration));
 
 export const mockDecode = async (password) => {
     await timeout();
-    return password;
+    return password + "decoded";
 };
 
-const getRandomString = (length = 8) => Math.random().toString(16).slice(0, length);
+export const getRandomString = (length = 8) => Math.random().toString(16).slice(2, 2 + length);
 
 export const mockGetMySecrets = async () => {
     await timeout();
@@ -24,6 +24,7 @@ export const mockGetMySecrets = async () => {
             socialList: [],
         }
     }
+    // return fromJS([])
     return fromJS([
         createSecret(),
         createSecret(),

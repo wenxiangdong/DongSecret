@@ -11,6 +11,7 @@ import { SecretsStore } from '../../../stores/secrets';
 export default (props) => {
     const log = useLogger('secret/detail/index');
 
+    log(props.location.query);
     const {getItem} = useContainer(SecretsStore);
     const secret = getItem(props.location.query.id);
     log(secret);

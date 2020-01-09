@@ -1,10 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef, useCallback } from 'react';
 import { Record, List } from 'immutable';
-import { View } from 'remax/wechat';
+import { View, navigateTo } from 'remax/wechat';
 import styles from './index.module.less';
-import { COLOR_LIST } from '../../constants';
+import { COLOR_LIST, ROUTES } from '../../constants';
 import Transition from '@vant/weapp/dist/transition';
 import Skeleton from '@vant/weapp/dist/skeleton';
+import Icon from '@vant/weapp/dist/icon';
+import Button from '@vant/weapp/dist/button';
+import { useContainer } from 'unstated-next';
+import { SecretsStore } from '../../stores/secrets';
 
 /**
  * 
@@ -14,6 +18,10 @@ import Skeleton from '@vant/weapp/dist/skeleton';
  * }} props 
  */
 export const SecretItem = ({secret, color = COLOR_LIST[0]}) => {
+    const handleClickMore = useCallback(
+        () => navigateTo({url: ROUTES.SECRET_DETAIL({id: secret.get('_id')})}),
+        [secret],
+    )
     return (
         <View 
             className={styles.itemWrapper}
@@ -21,15 +29,29 @@ export const SecretItem = ({secret, color = COLOR_LIST[0]}) => {
                 backgroundColor: color,
             }}
             >
-            <View className={styles.name}>
-                {secret.get('name')}
-            </View>
-            <View className={styles.account}>
-                {secret.get('account')}
+            <View className={styles.itemContent}>
+                <View>
+                    <View className={styles.name}>
+                        {secret.get('name')}
+                    </View>
+                    <View className={styles.account}>
+                        {secret.get('account')}
+                    </View>
+                </View>
+                <Icon bindclick={handleClickMore} name="more"/>
             </View>
         </View>
     );
-}
+};
+
+export const AddSecret = () => {
+    const {add} = useContainer(SecretsStore);
+    return (
+        <View className={styles.addWrapper}>
+            <Icon name="add-o"/>
+        </View>
+    );
+};
 
 export const SecretSkeleton = ({loading, children}) => {
     const style = useMemo(() => ({
@@ -53,16 +75,27 @@ export const SecretSkeleton = ({loading, children}) => {
  * }} props 
  */
 export default function({secretList}) {
+    const secretNodes = useMemo(() => secretList.map((item, index) => (
+        <Transition
+        key={index}
+        show
+        name="fade-up"
+        duration="500"
+        custom-style={{transitionDelay: index * 300 + 'ms'}}>
+            <View 
+            style={{margin: '8Px auto'}}>
+                <SecretItem secret={item} color={COLOR_LIST[index % COLOR_LIST.length]} />
+            </View>
+        </Transition>
+    )), [secretList]);
+    const noSecret = useMemo(() => (
+        <View className={styles.noSecret}>
+            没有密码
+        </View>
+    ), []);
     return (
         <View className={styles.list}>
-            {secretList.map((item, index) => (
-                <View 
-                key={index}
-                className={styles.slideUpIn}
-                style={{margin: '8px auto'}}>
-                    <SecretItem secret={item} color={COLOR_LIST[index % COLOR_LIST.length]} />
-                </View>
-            ))}
+            {secretList.size ? secretNodes : noSecret}
         </View>
     );
 }

@@ -3,6 +3,7 @@ import { View, Button } from 'remax/wechat';
 import styles from './index.module.less';
 import { fromJS } from 'immutable';
 import SecretListContainer from '../../../containers/SecretListContainer';
+import { AddSecret } from '../../../components/SecretList';
 
 export default () => {
     const handleClick = () => {
@@ -10,8 +11,8 @@ export default () => {
     }
     return (
     <View className={styles.wrapper}>
-        <Button onClick={handleClick}>Hello Home</Button>
-        
+        <AddSecret />
+        <SecretListContainer />
     </View>
     );
 }
