@@ -20,7 +20,7 @@ const secret = fromJS({
 export default function() {
     useLogger('dev', {auto: true});
     redirectTo({
-        url: ROUTES.INDEX,
+        url: ROUTES.INDEX(),
     })
     // return (
     //     <SecretDetail secret={secret} />

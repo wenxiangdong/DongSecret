@@ -102,7 +102,7 @@ export default function(props) {
         const phone = secret.get('phone');
         const copyPhoneButton = (
             <Button
-                bindtap={() => setClipboardData(phone)}
+                bindtap={() => setClipboardData({data: phone})}
                 type="default">
                 复制
             </Button>
