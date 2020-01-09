@@ -7,11 +7,11 @@ const DEBOUNCE_TIMEOUT = 500;
  * @param {() => Promise} asyncFn 
  * @param {{
  *  autoCall: boolean;  // 是否自动调用
- *  debouce: boolean;   // 是否防抖
+ *  debounce: boolean;   // 是否防抖
  * }} options 
  */
-export default function (asyncFn, options = {autoCall: true, debouce: true}) {
-    const [loading, setLoading] = useState(false);
+export default function (asyncFn, options = {autoCall: true, debounce: true}) {
+    const [loading, setLoading] = useState(options.autoCall);
     const [result, setResult] = useState(undefined);
     const [error, setError] = useState(undefined);
     const timerRef = useRef(undefined);
@@ -36,7 +36,7 @@ export default function (asyncFn, options = {autoCall: true, debouce: true}) {
                 log('call end')
             }
         }
-        if (options.debouce) {
+        if (options.debounce) {
             timerRef.current = setTimeout(() => {
                 request();
             },DEBOUNCE_TIMEOUT);

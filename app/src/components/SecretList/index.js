@@ -38,21 +38,36 @@ export const SecretItem = ({secret, color = COLOR_LIST[0]}) => {
                         {secret.get('account')}
                     </View>
                 </View>
-                <Icon bindclick={handleClickMore} name="more"/>
+                <Icon bindclick={handleClickMore} name="more" size={"60rpx"} />
             </View>
         </View>
     );
 };
 
+/**
+ * 增加秘密大按钮
+ */
 export const AddSecret = () => {
     const {add} = useContainer(SecretsStore);
-    return (
-        <View className={styles.addWrapper}>
+    const handleClick = useCallback(() => {
+        navigateTo({
+            url: ROUTES.SECRET_UPSERT()
+        });
+    }, [])
+    return useMemo(() => (
+        <View className={styles.addWrapper} onClick={handleClick}>
             <Icon name="add-o"/>
         </View>
-    );
+    ), []);
 };
 
+/**
+ * 秘密列表骨架
+ * @param {{
+ * loading: Boolean;
+ * children: React.ReactElement;
+ * }} props 
+ */
 export const SecretSkeleton = ({loading, children}) => {
     const style = useMemo(() => ({
         backgroundColor: 'white',

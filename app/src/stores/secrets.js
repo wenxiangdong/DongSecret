@@ -5,13 +5,6 @@ import {fromJS, Record, List, Map} from 'immutable';
  * @typedef {Record<import("../index").SecretType>} SecretItem
  *
  */
-/**
- * @typedef {{clearList;add;setAll;updateItem;remove;getItem;secrets: List<>}} SecretsStoreValue
- */
-
- /**
-  * @type {() => SecretsStoreValue}
-  */
 const useSecrets = () => {
     /** 
      * @typedef {Map<string, SecretItem>} SecretMap
@@ -50,9 +43,11 @@ const useSecrets = () => {
 
     /** 删除一些 */
     const remove = useCallback((/** @type {SecretItem[]} */...secrets) => {
-        setSecretMap(preMap => preMap.deleteAll(
-            secrets.map(item => item.get('_id'))
-        ));
+        const ids = secrets.map(item => item.get('_id'));
+        setSecretMap(preMap => {
+            console.log('remove', ids, preMap.toJS());
+            return preMap.deleteAll(ids);
+        });
     }, []);
 
     /** 拿某个 */
@@ -60,7 +55,6 @@ const useSecrets = () => {
      * @type {(id: string) => SecretItem}
      */
     const getItem = (id) => {
-        console.log("get item", secretMap.toJS())
         return secretMap.get(id);
     }
 
