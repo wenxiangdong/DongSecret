@@ -1,14 +1,15 @@
-import React, { useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useMemo, useEffect, useRef, useCallback, useState } from 'react';
 import { Record, List } from 'immutable';
-import { View, navigateTo } from 'remax/wechat';
+import { View, navigateTo, Text } from 'remax/wechat';
 import styles from './index.module.less';
 import { COLOR_LIST, ROUTES } from '../../constants';
-import Transition from '@vant/weapp/dist/transition';
 import Skeleton from '@vant/weapp/dist/skeleton';
 import Icon from '@vant/weapp/dist/icon';
 import Button from '@vant/weapp/dist/button';
 import { useContainer } from 'unstated-next';
 import { SecretsStore } from '../../stores/secrets';
+import MountedTransition from '../common/MountedTransition';
+import useLogger from '../../hooks/use-logger';
 
 /**
  * 
@@ -84,25 +85,42 @@ export const SecretSkeleton = ({loading, children}) => {
 }
 
 /**
+ * 秘密列表加载错误
+ * @param {{error: Error}} props 
+ */
+export const SecretListError = ({error}) => {
+    const log = useLogger(SecretListError.name);
+    useEffect(() => log(error));
+    return (
+        <View className={styles.list}>
+            <View className={styles.error}> 
+                <Icon name="warning-o" />
+                {` 加载秘密列表失败`}
+            </View>
+        </View>
+    );
+}
+
+/**
  * 
  * @param {{
  * secretList: List<Record<import('../..').SecretType>>;
  * }} props 
  */
 export default function({secretList}) {
-    const secretNodes = useMemo(() => secretList.map((item, index) => (
-        <Transition
-        key={index}
+    const secretNodes = secretList.map((item, index) => (
+        <MountedTransition
+        key={item.get('_id')}
         show
         name="fade-up"
         duration="500"
-        custom-style={{transitionDelay: index * 300 + 'ms'}}>
+        style={{transitionDelay: index * 300 + 'ms'}}>
             <View 
             style={{margin: '8Px auto'}}>
                 <SecretItem secret={item} color={COLOR_LIST[index % COLOR_LIST.length]} />
             </View>
-        </Transition>
-    )), [secretList]);
+        </MountedTransition>
+    ));
     const noSecret = useMemo(() => (
         <View className={styles.noSecret}>
             没有密码

@@ -10,7 +10,7 @@ const DEBOUNCE_TIMEOUT = 500;
  *  debounce: boolean;   // 是否防抖
  * }} options 
  */
-export default function (asyncFn, options = {autoCall: true, debounce: true}) {
+export default function (asyncFn, options = {autoCall: true, debounce: false}) {
     const [loading, setLoading] = useState(options.autoCall);
     const [result, setResult] = useState(undefined);
     const [error, setError] = useState(undefined);

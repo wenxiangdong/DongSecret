@@ -25,6 +25,7 @@
     "unstated-next": "^1.1.0"
   },
   "devDependencies": {
-    "chokidar": "^2.1.8"
+    "chokidar": "^2.1.8",
+    "babel-preset-remax": "^1.11.0"
   }
 }

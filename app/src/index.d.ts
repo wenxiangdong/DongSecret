@@ -31,3 +31,5 @@ export interface SecretType {
     // 前端自加
     decoded: false;     // 是否已经解码过了
 }
+
+export type SecretRecord = Record<SecretType>;

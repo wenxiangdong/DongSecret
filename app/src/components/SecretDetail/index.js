@@ -9,8 +9,6 @@ import { View, setClipboardData, Text, showToast, showActionSheet, showModal, na
 import usePassword from '../../hooks/use-password';
 import useLogger from '../../hooks/use-logger';
 import VanButton from '@vant/weapp/dist/button';
-import {SecretsStore} from '../../stores/secrets';
-import { useContainer } from 'unstated-next';
 import { SOCIAL_LOGOS, ROUTES } from '../../constants';
 import { API } from '../../apis';
 import useAsync from '../../hooks/use-async';
@@ -48,7 +46,10 @@ const SocialCell = (props) => {
 
 /**
  * 编辑按钮
- * @param {{secret: import('immutable').Record<import('../..').SecretType>}} props 
+ * @param {{
+ * secret: import('immutable').Record<import('../..').SecretType>;
+ * onEdit: (secret: import('immutable').Record<import('../..').SecretType>) => void;
+ * }} props 
  */
 const EditSecretButton = (props) => {
     const {secret} = props;
@@ -56,6 +57,7 @@ const EditSecretButton = (props) => {
         navigateTo({
             url: ROUTES.SECRET_UPSERT({id: secret.get('_id')},)
         });
+        onEdit?.(secret);
     }, [secret]);
     return (
         <Button
@@ -71,11 +73,13 @@ const EditSecretButton = (props) => {
 
 /**
  * 删除按钮
- * @param {{secret: import('immutable').Record<import('../..').SecretType>}} props 
+ * @param {{
+ *  secret: import('immutable').Record<import('../..').SecretType>;
+ *  onDelete: (secret: import('immutable').Record<import('../..').SecretType>) => void;
+ * }} props 
  */
 const DeleteSecretButton = (props) => {
-    const {secret} = props;
-    const {remove} = useContainer(SecretsStore);
+    const {secret, onDelete} = props;
     const deleteSecretAsync = useCallback(async () => API.deleteSecret(secret.get('_id')), [secret]);
     const {loading, error, result, call} = useAsync(deleteSecretAsync, {autoCall: false, debounce: true});
 
@@ -90,7 +94,7 @@ const DeleteSecretButton = (props) => {
                 title: '删除成功',
                 icon: 'success'
             });
-            remove(secret);
+            onDelete?.(secret);
             navigateBack();
         }
     }, [result, error]);
@@ -120,16 +124,19 @@ const DeleteSecretButton = (props) => {
 /**
  * 密码详情
  * @param {{
- *  secret: import("../..").Record<import("../..").SecretType>
+ *  secret: import("../..").SecretRecord;
+ *  onDelete: (secret: import("../..").SecretRecord) => void;
+ *  onEdit: (secret: import("../..").SecretRecord) => void;
+ *  onUpdate: (secret: import("../..").SecretRecord) => void;
  * }} props 
  */
 export default function(props) {
-    const {secret} = props;
+    const {secret, onDelete, onEdit, onUpdate} = props;
     if (!secret) return null;
 
     const log = useLogger('SecretDetail');
     const {decoding, decode, decodedPassword, error} = usePassword(secret.get('password'));
-    const {updateItem} = useContainer(SecretsStore);
+
     const displayPassword = useMemo(() => {
         if (decoding) {
             return '解码中...';
@@ -143,9 +150,9 @@ export default function(props) {
     /** 更新秘密项的decoded属性 */
     useEffect(() => {
         if (decodedPassword) {
-            updateItem(secret.set('decoded', true).set('password', decodedPassword));
+            onUpdate?.(secret.set('decoded', true).set('password', decodedPassword));
         }
-    }, [decodedPassword, updateItem, secret]);
+    }, [decodedPassword, onUpdate, secret]);
 
     //======== elements =========//
     /** 标题 */
@@ -227,11 +234,11 @@ export default function(props) {
     const functionalButtons = useMemo(() => {
         return (
             <View className={styles.functionalButtonGroup}>
-                <EditSecretButton secret={secret} />
-                <DeleteSecretButton secret={secret} />
+                <EditSecretButton secret={secret} onEdit={onEdit} />
+                <DeleteSecretButton secret={secret} onDelete={onDelete} />
             </View>
         );
-    }, [secret]);
+    }, [secret, onDelete, onEdit]);
 
     return (
         <Panel custom-class={styles.panel}>
