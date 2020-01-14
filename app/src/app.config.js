@@ -6,10 +6,10 @@ module.exports = {
     'pages/secret/detail/index',
     'pages/secret/upsert/index',
 
-    'pages/setting/update-password/index',
+    'pages/setting/update-password/index'
   ],
   window: {
     navigationBarTitleText: '东密码',
-    navigationBarBackgroundColor: '#282c34',
+    navigationBarBackgroundColor: '#282c34'
   }
 };
