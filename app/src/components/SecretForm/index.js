@@ -172,7 +172,7 @@ export default function({secret, onSubmit}) {
             onListChange(socialList.delete(index));
         }
         return socialList.map(item => (
-            <SocialItem socialItem={item} onDelete={console.log} />
+            <SocialItem socialItem={item} onDelete={handleDeleteItem} />
         ));
     }, [secretForm.get('socialList'), onChanges.get('socialList')]);
 

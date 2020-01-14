@@ -29,7 +29,7 @@ export default function({socialItem, onDelete}) {
                             plain
                             hairline
                             size="mini"
-                            bindclick={onDelete} />
+                            bindclick={() => onDelete(socialItem)} />
                     </View>
                 )
             }
