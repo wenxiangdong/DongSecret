@@ -69,7 +69,4 @@ const useSecrets = () => {
     };
 };
 
-/**
- * @type {import('unstated-next').Container<SecretsStoreValue>}
- */
 export const SecretsStore = createContainer(useSecrets);

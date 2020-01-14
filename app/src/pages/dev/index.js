@@ -6,6 +6,7 @@ import useLogger from '../../hooks/use-logger';
 import { getRandomString } from '../../apis/__mock__';
 import SecretDetail from '../../components/SecretDetail';
 import { fromJS } from 'immutable';
+import SecretForm from '../../components/SecretForm';
 
 /** @type {import("../../index").SecretType} */
 const mock = {
@@ -32,11 +33,14 @@ const mock = {
 const secret = fromJS(mock);
 export default function() {
     useLogger('dev', {auto: true});
-    redirectTo({
-        url: ROUTES.INDEX(),
-    })
-    // return (
-    //     <SecretDetail secret={secret} />
-    // );
+    // redirectTo({
+    //     url: ROUTES.INDEX(),
+    // })
+    return (
+        <>
+        <SecretForm secret={secret} />
+        <SecretDetail secret={secret} />
+        </>
+    );
     return null;
 }

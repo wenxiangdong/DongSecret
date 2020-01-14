@@ -1,18 +1,17 @@
-import {Record as ImmutableRecord} from "immutable";
+import {RecordOf as ImmutableRecord} from "immutable";
+export type Record<T> = ImmutableRecord<T>;
+
+
 export interface Response<T = any> {
     data: T;
     code: number;
     message: string;
 }
-
 export interface SocialType {
     id: string;
     name: string;
     account: string;
 }
-
-export type Record<T> = ImmutableRecord<T>;
-
 export interface SecretType {
     _id: string;
     _openid: string;
@@ -31,5 +30,22 @@ export interface SecretType {
     // 前端自加
     decoded: false;     // 是否已经解码过了
 }
-
 export type SecretRecord = Record<SecretType>;
+
+
+
+export type ValidationFunction = <T = any>(value: T) => string;
+export type ValidationMap<T> = {[K in keyof T]?: Array<ValidationFunction<T[K]>>};
+export type MapEventToValue<T> = {[K in keyof T]?: (key: K) => T[K];}
+export type MakeForm<T = any> = (validationMap?: ValidationMap<T>, mapEventToValue?: MapEventToValue<T>) => UseForm<T>
+export type UseFormHandlers<T> = Record<{
+    [K in keyof T]: (value: any) => void;
+}>
+export type UseFormErrors<T> = Record<{
+    [K in keyof T]: Array<string>;
+}>;
+export type UseForm<T = any> = (initState: T) => [
+    Record<T>,
+    UseFormErrors<T>,
+    UseFormHandlers<T>,
+];

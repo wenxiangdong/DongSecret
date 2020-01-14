@@ -46,3 +46,7 @@ export const mockDeleteSecret = async () => {
     await timeout();
     return true;
 }
+
+export const mockUpsertSecret = async () => {
+    await timeout();
+}

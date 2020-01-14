@@ -13,6 +13,8 @@ import VanButton from '@vant/weapp/dist/button';
 import { SOCIAL_LOGOS, ROUTES } from '../../constants';
 import { API } from '../../apis';
 import useAsync from '../../hooks/use-async';
+import SocialCell from '../SocialItem';
+
 
 const Cell = ({title, value, children}) => {
     return (
@@ -37,28 +39,6 @@ const OperationButton = ({children, bindtap, type, loading, loadingText, disable
     </VanButton>);
 
 /**
- * 社交项
- * @param {{socialItem:  import('immutable').Record<import('../..').SocialType>}} props 
- */
-const SocialCell = (props) => {
-    const {socialItem} = props;
-    const icon = SOCIAL_LOGOS[socialItem.get('id')];
-    return (
-        <Field
-        readonly={true}
-        left-icon={icon}
-        label={socialItem.get('name')}
-        value={socialItem.get('account')}></Field>
-    );
-    // return (
-    //     <Cell 
-    //     icon={icon}
-    //     title={socialItem.get('name')}
-    //     value={socialItem.get('account')}></Cell>
-    // );
-}
-
-/**
  * 编辑按钮
  * @param {{
  * secret: import('immutable').Record<import('../..').SecretType>;
@@ -66,7 +46,7 @@ const SocialCell = (props) => {
  * }} props 
  */
 const EditSecretButton = (props) => {
-    const {secret} = props;
+    const {secret, onEdit} = props;
     const handleClickModifyButton = useCallback(() => {
         navigateTo({
             url: ROUTES.SECRET_UPSERT({id: secret.get('_id')},)
