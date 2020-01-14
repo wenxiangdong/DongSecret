@@ -1,7 +1,8 @@
 import React, { useMemo, useEffect, useCallback } from 'react';
 import Panel from '@vant/weapp/dist/panel';
-import Cell from '@vant/weapp/dist/cell';
+// import Cell from '@vant/weapp/dist/cell';
 import CellGroup from '@vant/weapp/dist/cell-group';
+import Field from '@vant/weapp/dist/field';
 import Icon from '@vant/weapp/dist/icon';
 import Button from '@vant/weapp/dist/button';
 import styles from './index.module.less';
@@ -13,7 +14,13 @@ import { SOCIAL_LOGOS, ROUTES } from '../../constants';
 import { API } from '../../apis';
 import useAsync from '../../hooks/use-async';
 
-
+const Cell = ({title, value, children}) => {
+    return (
+        <Field label={title} value={value} readonly={true}>
+            {children}
+        </Field>
+    );
+}
 
 const OperationButton = ({children, bindtap, type, loading, loadingText, disabled}) => (
     <VanButton
@@ -37,11 +44,18 @@ const SocialCell = (props) => {
     const {socialItem} = props;
     const icon = SOCIAL_LOGOS[socialItem.get('id')];
     return (
-        <Cell 
-        icon={icon}
-        title={socialItem.get('name')}
-        value={socialItem.get('account')}></Cell>
+        <Field
+        readonly={true}
+        left-icon={icon}
+        label={socialItem.get('name')}
+        value={socialItem.get('account')}></Field>
     );
+    // return (
+    //     <Cell 
+    //     icon={icon}
+    //     title={socialItem.get('name')}
+    //     value={socialItem.get('account')}></Cell>
+    // );
 }
 
 /**
@@ -196,17 +210,15 @@ export default function(props) {
             <CellGroup title="主要信息">
             <Cell title="账号" value={secret.get('account')} />
             {/* <Cell title="密码" value={displayPassword} /> */}
-            <Cell title="密码">
-                <View className={styles.passwordCellContent}>
-                    <Text>{displayPassword}</Text>
+            <Cell title="密码" value={displayPassword}>
+                <View slot="button">
                     {decodeButton}
                     {copyPasswordButton}
                 </View>
             </Cell>
             {phone && 
-            <Cell title="绑定手机">
-                <View>
-                    <Text>{phone}</Text>
+            <Cell title="绑定手机" value={phone}>
+                <View slot="button">
                     {copyPhoneButton}
                 </View>
             </Cell>}
