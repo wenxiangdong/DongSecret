@@ -5,19 +5,9 @@ import Field from '@vant/weapp/dist/field';
 import Icon from '@vant/weapp/dist/icon';
 import Button from '@vant/weapp/dist/button';
 import styles from './index.module.less';
-import {
-  View,
-  setClipboardData,
-  Text,
-  showToast,
-  showActionSheet,
-  showModal,
-  navigateBack,
-  navigateTo
-} from 'remax/wechat';
+import { View, setClipboardData, Text } from 'remax/wechat';
 import usePassword from '../../hooks/use-password';
 import useLogger from '../../hooks/use-logger';
-import { SOCIAL_LOGOS, ROUTES } from '../../constants';
 import SocialCell from '../SocialItem';
 
 const Cell = ({ title, value, children }) => {
