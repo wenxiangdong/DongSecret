@@ -34,11 +34,11 @@ const secret = fromJS(mock);
 export default function() {
   useLogger('dev', { auto: true });
   redirectTo({
-    url: ROUTES.INDEX()
+    url: ROUTES.SECRET_UPSERT()
   });
   // return (
   //   <>
-  //     <SecretForm secret={secret} />
+  //     <SecretForm secret={secret} onSubmit={console.log} />
   //     {/* <SecretDetail secret={secret} /> */}
   //   </>
   // );

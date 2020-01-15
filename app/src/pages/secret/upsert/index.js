@@ -6,6 +6,7 @@ import { SecretsStore } from '../../../stores/secrets';
 import SecretForm from '../../../components/SecretForm';
 import { API } from '../../../apis';
 import useLogger from '../../../hooks/use-logger';
+import { fromJS } from 'immutable';
 
 export default function({ location: { query: { id } = {} } }) {
   const isNew = useMemo(() => !id);
@@ -20,7 +21,7 @@ export default function({ location: { query: { id } = {} } }) {
 
   const secret = useMemo(() => {
     const item = getItem(id);
-    return item;
+    return item || fromJS({});
   }, [id, getItem]);
 
   const handleSubmit = useCallback(

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import styles from './index.module.less';
 import { View } from 'remax/wechat';
 import { makeForm, Validators } from '../../hooks/use-form';
 import Field from '@vant/weapp/dist/field';
@@ -48,6 +49,7 @@ const MAIN_INFO_FORM_CONFIGS = {
     id: 'password',
     name: '密码',
     required: true,
+    placeholder: '密码会被加密保存',
     validators: [
       Validators.required('密码不能为空'),
       value => value?.length < 6 && '密码长度小于6'
@@ -102,7 +104,7 @@ const useForm = makeSecretForm(
  */
 export default function({ secret, onSubmit }) {
   const log = useLogger('SecretForm');
-  const [secretForm, errors, onChanges] = useForm(secret.toJS());
+  const [secretForm, errors, onChanges, formValid] = useForm(secret.toJS());
   /**
    *
    * @type {{[K in keyof import('../..').SecretType]: any}}
@@ -171,15 +173,31 @@ export default function({ secret, onSubmit }) {
       );
       onListChange(socialList.delete(index));
     };
-    return socialList.map(item => (
+    return socialList?.map(item => (
       <SocialItem socialItem={item} onDelete={handleDeleteItem} />
     ));
   }, [secretForm.get('socialList'), onChanges.get('socialList')]);
 
+  /** 提交按钮 */
+  const submitButton = useMemo(() => {
+    return (
+      <Button
+        type="primary"
+        block
+        icon="passed"
+        disabled={!formValid}
+        bindclick={() => onSubmit(secretForm)}
+      >
+        确定
+      </Button>
+    );
+  }, [onSubmit, secretForm, formValid]);
+
   return (
-    <Panel>
+    <Panel custom-class={styles.panel}>
       <CellGroup title="主要信息">{mainInfoForm}</CellGroup>
       <CellGroup title="社交账号">{socialList}</CellGroup>
+      <View className={styles.submitButtonWrapper}>{submitButton}</View>
     </Panel>
   );
 }
