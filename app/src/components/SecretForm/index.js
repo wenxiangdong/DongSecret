@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import styles from './index.module.less';
-import { View } from 'remax/wechat';
+import { View, showToast } from 'remax/wechat';
 import { makeForm, Validators } from '../../hooks/use-form';
 import Field from '@vant/weapp/dist/field';
 import CellGroup from '@vant/weapp/dist/cell-group';
@@ -9,6 +9,17 @@ import Panel from '@vant/weapp/dist/panel';
 import useLogger from '../../hooks/use-logger';
 import SocialItem from '../SocialItem';
 import { List } from 'immutable';
+import useAsync from '../../hooks/use-async';
+
+/** @type {import('../..').SecretType} */
+const DEFAULT_SECRET = {
+  name: '',
+  account: '',
+  password: '',
+  phone: '',
+  socialList: [],
+  decoded: true
+};
 
 /**
  * Field组件的 事件-value 转换函数
@@ -104,7 +115,35 @@ const useForm = makeSecretForm(
  */
 export default function({ secret, onSubmit }) {
   const log = useLogger('SecretForm');
-  const [secretForm, errors, onChanges, formValid] = useForm(secret.toJS());
+  const [secretForm, errors, onChanges, formValid] = useForm(
+    secret?.toJS() || DEFAULT_SECRET
+  );
+  /** 是新建么 */
+  const isNew = useMemo(() => !secret, [secret]);
+  /** 点击提交按钮 */
+  const handleSubmit = useCallback(async () => {
+    await onSubmit?.(secretForm);
+    showToast({
+      title: `${isNew ? '新建' : '修改'}密码项成功`,
+      icon: 'success'
+    });
+  }, [onSubmit, secretForm, isNew]);
+
+  /** 提交错误 */
+  useEffect(() => {
+    submitError &&
+      showToast({
+        title: `出错了（${submitError?.message}），请重试`,
+        icon: 'none'
+      });
+  }, [submitError]);
+
+  const {
+    result: submitResult,
+    loading: submitLoading,
+    error: submitError,
+    call: callSubmit
+  } = useAsync(handleSubmit, { autoCall: false, debounce: true });
   /**
    *
    * @type {{[K in keyof import('../..').SecretType]: any}}
@@ -173,7 +212,7 @@ export default function({ secret, onSubmit }) {
       );
       onListChange(socialList.delete(index));
     };
-    return socialList?.map(item => (
+    return socialList?.map?.(item => (
       <SocialItem socialItem={item} onDelete={handleDeleteItem} />
     ));
   }, [secretForm.get('socialList'), onChanges.get('socialList')]);
@@ -186,12 +225,13 @@ export default function({ secret, onSubmit }) {
         block
         icon="passed"
         disabled={!formValid}
-        bindclick={() => onSubmit(secretForm)}
+        loading={submitLoading}
+        bindclick={callSubmit}
       >
         确定
       </Button>
     );
-  }, [onSubmit, secretForm, formValid]);
+  }, [onSubmit, secretForm, formValid, submitLoading, callSubmit]);
 
   return (
     <Panel custom-class={styles.panel}>

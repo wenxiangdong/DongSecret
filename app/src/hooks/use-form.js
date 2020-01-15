@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { fromJS } from 'immutable';
 import useLogger from './use-logger';
 /**
@@ -58,8 +58,8 @@ export const makeForm = (validationMap = {}, mapEventToValue = {}) => {
     );
     const valid = useMemo(() => {
       return !(
-        formState.equals(fromJS({})) 
-        || Object.keys(initState).some(key => !!formError.get(key)?.length)
+        formState.equals(fromJS(initState)) ||
+        Object.keys(initState).some(key => !!formError.get(key)?.length)
       );
     }, [formError, formState]);
     return [formState, formError, handlers, valid];

@@ -141,7 +141,7 @@ export default function(props) {
     });
     return (
       <>
-        {socialList.size && (
+        {!!socialList.size && (
           <CellGroup title="绑定社交">{socialListComponents}</CellGroup>
         )}
       </>
