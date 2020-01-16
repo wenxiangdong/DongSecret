@@ -6,6 +6,7 @@ module.exports = {
     'pages/secret/detail/index',
     'pages/secret/upsert/index',
 
+    'paegs/setting/index',
     'pages/setting/update-password/index'
   ],
   window: {

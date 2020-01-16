@@ -5,7 +5,9 @@ const stringifyQuery = object =>
   Object.keys(object)
     .map(key => `${key}=${object[key]}`)
     .join('&');
+/** 路由 */
 export const ROUTES = {
+  SETTING: () => '/paegs/setting/index',
   UPDATE_PASSWORD: () => '/pages/setting/update-password/index',
   INDEX: () => '/pages/index/index',
   SECRET_DETAIL: (/** @type {{id: string}} */ props = {}) => {
