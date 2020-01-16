@@ -58,7 +58,11 @@ export const AddSecret = () => {
   }, []);
   return useMemo(
     () => (
-      <View className={styles.addWrapper} onClick={handleClick}>
+      <View
+        className={styles.addWrapper}
+        onClick={handleClick}
+        hoverClass={styles.addWrapperHover}
+      >
         <Icon name="add" />
       </View>
     ),

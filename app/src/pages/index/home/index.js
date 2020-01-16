@@ -16,7 +16,11 @@ export default () => {
   }, []);
   return (
     <View className={styles.wrapper}>
-      <Search value={searchKeyword} bindsearch={handleSearch} />
+      <Search
+        value={searchKeyword}
+        bindsearch={handleSearch}
+        placeholder="输入关键词找到你的密码项吧"
+      />
       <AddSecret />
       <SecretListContainer keyword={searchKeyword} />
     </View>
