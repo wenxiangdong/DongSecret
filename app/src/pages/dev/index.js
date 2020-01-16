@@ -6,6 +6,9 @@ import useLogger from '../../hooks/use-logger';
 import { getRandomString } from '../../apis/__mock__';
 import { fromJS } from 'immutable';
 import SecretForm from '../../components/SecretForm';
+import Background from '../../components/common/Background';
+import Setting from '../index/setting';
+import Home from '../index/home';
 // import SecretDetail from '../../components/SecretDetail';
 
 /** @type {import("../../index").SecretType} */
@@ -34,11 +37,11 @@ const secret = fromJS(mock);
 export default function() {
   useLogger('dev', { auto: true });
   redirectTo({
-    url: ROUTES.SECRET_UPSERT()
+    url: ROUTES.INDEX()
   });
   // return (
   //   <>
-  //     <SecretForm secret={secret} onSubmit={console.log} />
+  //     <Home />
   //     {/* <SecretDetail secret={secret} /> */}
   //   </>
   // );

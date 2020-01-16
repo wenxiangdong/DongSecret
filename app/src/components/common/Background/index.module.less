@@ -1,0 +1,63 @@
+@color1: #03a9f4;
+@color2: #4caf50;
+@color3: #8bc34a;
+@color4: #ffc107;
+@color5: #ff9800;
+@color6: #ff7043;
+@keyframes colorAnimation {
+  0% {
+    background-color: @color1;
+  }
+  20% {
+    background-color: @color2;
+  }
+  40% {
+    background-color: @color3;
+  }
+  60% {
+    background-color: @color4;
+  }
+  80% {
+    background-color: @color5;
+  }
+  100% {
+    background-color: @color6;
+  }
+}
+
+@keyframes circleRotate {
+  0% {
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+
+  .color {
+    position: absolute;
+    top: 20vh;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    animation: colorAnimation 15s ease-in infinite alternate;
+  }
+
+  .circle {
+    position: absolute;
+    background-color: #ffffff;
+    width: 200vw;
+    height: 200vw;
+    border-radius: 35%;
+    animation: circleRotate 10s linear infinite;
+    top: -150vw;
+    left: -50vw;
+  }
+}

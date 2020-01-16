@@ -1,57 +1,67 @@
 @radius: 20px;
-@list-padding: 8Px;
+@list-padding: 8px;
 .itemWrapper {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1em;
-    color: white;
-    border-radius: @radius;
-    border-top-left-radius: 0;
-    font-size: var(--font-size-md, 28rpx);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em;
+  color: white;
+  border-radius: @radius;
+  border-top-left-radius: 0;
+  font-size: var(--font-size-md, 28rpx);
 
-    .itemContent {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
+  .itemContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 
-    .name {
-        font-size: 1.5em;
-        margin-bottom: 8Px;
-    }
+  .name {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+  }
 }
 
 .list {
-    box-sizing: border-box;
-    width: 100%;
-    padding: @list-padding;
+  box-sizing: border-box;
+  width: 100%;
+  padding: @list-padding;
 
-    .noSecret {
-        text-align: center;
-        color: var(--text-color);
-    }
+  .noSecret {
+    text-align: center;
+    color: var(--text-color);
+  }
 
-    .error {
-        padding-top: 8px;
-        text-align: center;
-        color: var(--text-secondary-color);
-        font-size: 18Px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-.addWrapper {
-    border: var(--blue) 1Px dashed;
-    border-radius: @radius;
-    color: var(--blue);
-    font-size: 64rpx;
-
+  .error {
+    padding-top: 8px;
+    text-align: center;
+    color: var(--text-secondary-color);
+    font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
 
-    padding: 16rpx;
-    margin: @list-padding;
+.addWrapper {
+  @icon-size: 48px;
+  border-radius: 50%;
+  color: var(--blue);
+
+  font-size: @icon-size;
+  line-height: @icon-size;
+  width: @icon-size;
+  height: @icon-size;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: calc(var(--tabbar-height) + 16px);
+
+  z-index: 100;
+
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.3) -3px 3px 5px;
 }

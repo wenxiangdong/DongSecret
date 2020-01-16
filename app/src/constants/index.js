@@ -7,9 +7,12 @@ const stringifyQuery = object =>
     .join('&');
 /** 路由 */
 export const ROUTES = {
-  SETTING: () => '/paegs/setting/index',
+  SETTING: () => '/pages/setting/index',
   UPDATE_PASSWORD: () => '/pages/setting/update-password/index',
+  ABOUT: () => `/pages/setting/about/index`,
+
   INDEX: () => '/pages/index/index',
+
   SECRET_DETAIL: (/** @type {{id: string}} */ props = {}) => {
     const query = stringifyQuery(props);
     return `/pages/secret/detail/index?${query}`;

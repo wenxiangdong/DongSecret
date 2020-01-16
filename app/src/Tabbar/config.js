@@ -1,21 +1,21 @@
 import Home from '../pages/index/home';
-import Me from '../pages/index/me';
+import Me from '../pages/index/setting';
 
 const config = {
-    pages: [
-        {
-            name: 'home',
-            component: Home,
-            icon: 'home-o',
-        },
-        {
-            name: 'setting',
-            component: Me,
-            icon: 'setting-o',
-        },
-    ],
-    selectedColor: "#07c160",
-    baseUrl: "/pages/index/index"
-}
+  pages: [
+    {
+      name: 'home',
+      component: Home,
+      icon: 'home-o'
+    },
+    {
+      name: 'setting',
+      component: Me,
+      icon: 'setting-o'
+    }
+  ],
+  selectedColor: '#07c160',
+  baseUrl: '/pages/index/index'
+};
 
 export default config;

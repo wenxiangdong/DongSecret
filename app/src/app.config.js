@@ -6,8 +6,8 @@ module.exports = {
     'pages/secret/detail/index',
     'pages/secret/upsert/index',
 
-    'paegs/setting/index',
-    'pages/setting/update-password/index'
+    'pages/setting/update-password/index',
+    'pages/setting/about/index'
   ],
   window: {
     navigationBarTitleText: '东密码',
