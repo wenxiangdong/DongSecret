@@ -4,9 +4,9 @@ export default class PasswordUtil {
     const letterAndNumber = Math.random()
       .toString(36)
       .slice(-8);
-    const specialBits = '..'.map(
-      () => SPECIALS[Math.floor(Math.random() * SPECIALS.length)]
-    );
+    const specialBits = Array(2)
+      .fill('')
+      .map(() => SPECIALS[Math.floor(Math.random() * SPECIALS.length)]);
     return letterAndNumber + specialBits;
   }
 }

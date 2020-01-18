@@ -218,6 +218,10 @@ export default function({ secret, onSubmit }) {
       );
       onListChange(socialList.delete(index));
     };
+    const handleAdd = () => {
+      setShowAddSocialDialog(false);
+      setShowAddSocialDialog(true);
+    };
     return (
       <>
         {socialList?.map?.(item => (
@@ -230,7 +234,7 @@ export default function({ secret, onSubmit }) {
               hairline
               size="small"
               type="info"
-              bindclick={() => setShowAddSocialDialog(true)}
+              bindclick={handleAdd}
             >
               新增
             </Button>
@@ -254,6 +258,7 @@ export default function({ secret, onSubmit }) {
           use-slot
           show-confirm-button={false}
           close-on-click-overlay={true}
+          bindclose={() => setShowAddSocialDialog(false)}
           title="绑定社交"
         >
           <SocialForm onSubmit={handleSubmit} />
