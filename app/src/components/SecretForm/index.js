@@ -226,6 +226,7 @@ export default function({ secret, onSubmit }) {
         <Cell>
           <View>
             <Button
+              plain
               size="small"
               type="info"
               bindclick={() => setShowAddSocialDialog(true)}
