@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react';
+import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './index.module.less';
 import { View, showToast } from 'remax/wechat';
 import { makeForm, Validators } from '../../hooks/use-form';
@@ -6,10 +6,14 @@ import Field from '@vant/weapp/dist/field';
 import CellGroup from '@vant/weapp/dist/cell-group';
 import Button from '@vant/weapp/dist/button';
 import Panel from '@vant/weapp/dist/panel';
+import Dialog from '@vant/weapp/dist/dialog';
+import Cell from '@vant/weapp/dist/cell';
 import useLogger from '../../hooks/use-logger';
 import SocialItem from '../SocialItem';
 import { List } from 'immutable';
 import useAsync from '../../hooks/use-async';
+import SocialForm from '../SocialForm';
+import PasswordUtil from '../../utils/password';
 
 /** @type {import('../..').SecretType} */
 const DEFAULT_SECRET = {
@@ -68,7 +72,7 @@ const MAIN_INFO_FORM_CONFIGS = {
     mapEventToValue: MapFieldChangeEventToValue,
     buttonSlot: onClick => (
       <View slot="button">
-        <Button type="primary" bindclick={onClick} size="small" plain hairline>
+        <Button type="info" bindclick={onClick} size="small" plain hairline>
           随机生成
         </Button>
       </View>
@@ -118,6 +122,8 @@ export default function({ secret, onSubmit }) {
   const [secretForm, errors, onChanges, formValid] = useForm(
     secret?.toJS() || DEFAULT_SECRET
   );
+  const [showAddSocialDialog, setShowAddSocialDialog] = useState(false);
+
   /** 是新建么 */
   const isNew = useMemo(() => !secret, [secret]);
   /** 点击提交按钮 */
@@ -151,7 +157,7 @@ export default function({ secret, onSubmit }) {
   const MAIN_INFO_FORM_ON_CLICKS = useMemo(() => {
     return {
       password: () => {
-        const randomPassword = Math.random();
+        const randomPassword = PasswordUtil.generate();
         log(randomPassword);
         onChanges.get('password')?.(randomPassword);
       }
@@ -212,10 +218,53 @@ export default function({ secret, onSubmit }) {
       );
       onListChange(socialList.delete(index));
     };
-    return socialList?.map?.(item => (
-      <SocialItem socialItem={item} onDelete={handleDeleteItem} />
-    ));
+    return (
+      <>
+        {socialList?.map?.(item => (
+          <SocialItem socialItem={item} onDelete={handleDeleteItem} />
+        ))}
+        <Cell>
+          <View>
+            <Button
+              size="small"
+              type="info"
+              bindclick={() => setShowAddSocialDialog(true)}
+            >
+              新增
+            </Button>
+          </View>
+        </Cell>
+      </>
+    );
   }, [secretForm.get('socialList'), onChanges.get('socialList')]);
+
+  const addSocialDialog = useMemo(() => {
+    const handleSubmit = social => {
+      const socialList = secretForm.get('socialList');
+      const onSocialListChange = onChanges.get('socialList');
+      onSocialListChange?.(socialList.push(social));
+      setShowAddSocialDialog(false);
+    };
+    if (showAddSocialDialog) {
+      return (
+        <Dialog
+          show={true}
+          use-slot
+          show-confirm-button={false}
+          close-on-click-overlay={true}
+          title="绑定社交"
+        >
+          <SocialForm onSubmit={handleSubmit} />
+        </Dialog>
+      );
+    } else {
+      return null;
+    }
+  }, [
+    secretForm.get('socialList'),
+    onChanges.get('socialList'),
+    showAddSocialDialog
+  ]);
 
   /** 提交按钮 */
   const submitButton = useMemo(() => {
@@ -237,6 +286,7 @@ export default function({ secret, onSubmit }) {
     <Panel custom-class={styles.panel}>
       <CellGroup title="主要信息">{mainInfoForm}</CellGroup>
       <CellGroup title="社交账号">{socialList}</CellGroup>
+      {addSocialDialog}
       <View className={styles.submitButtonWrapper}>{submitButton}</View>
     </Panel>
   );

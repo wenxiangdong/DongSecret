@@ -56,5 +56,22 @@ export const mockDeleteSecret = async () => {
 
 export const mockUpsertSecret = async () => {
   await timeout();
-  return { _id: getRandomString() };
+  return fromJS({ _id: getRandomString() });
+};
+
+/**
+ * @returns {import('..').UserType}
+ */
+export const mockAuth = async () => {
+  await timeout();
+  return fromJS({
+    _id: getRandomString(),
+    since: +new Date(),
+    state: 2
+  });
+};
+
+export const mockSetOnePassword = async () => {
+  await timeout();
+  return true;
 };

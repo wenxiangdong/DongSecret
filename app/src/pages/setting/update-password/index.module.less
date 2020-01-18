@@ -1,0 +1,44 @@
+.wrapper {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+
+  padding: 16px;
+  padding-top: 15vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+
+  .passwordForm {
+    .passwordInputWrapper {
+      box-sizing: border-box;
+    }
+  }
+
+  .buttonWrapper {
+    padding: 0 16px;
+  }
+}
+
+.sectionTitle {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 16px;
+  @h-padding: 8px;
+
+  .title {
+    color: var(--text-color);
+    font-size: 1.5em;
+    border-left: var(--blue) 4px solid;
+    padding: @h-padding;
+  }
+
+  .desc {
+    color: var(--text-secondary-color);
+    word-wrap: break-word;
+    white-space: normal;
+    padding: 4px @h-padding;
+  }
+}

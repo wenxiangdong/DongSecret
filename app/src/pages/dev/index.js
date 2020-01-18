@@ -1,5 +1,5 @@
 import React from 'react';
-import { redirectTo, navigateTo } from 'remax/wechat';
+import { redirectTo, navigateTo, View } from 'remax/wechat';
 import { ROUTES, SOCIAL_IDS } from '../../constants';
 import SecretListContainer from '../../containers/SecretListContainer';
 import useLogger from '../../hooks/use-logger';
@@ -9,6 +9,12 @@ import SecretForm from '../../components/SecretForm';
 import Background from '../../components/common/Background';
 import Setting from '../index/setting';
 import Home from '../index/home';
+import PasswordInput from '../../components/PasswordInput';
+import Loading from '../../components/common/Loading';
+import withAuth from '../../hocs/with-auth';
+import AuthLayer from '../../components/common/AuthLayer';
+import SocialForm from '../../components/SocialForm';
+import Dialog from '@vant/weapp/dist/dialog';
 // import SecretDetail from '../../components/SecretDetail';
 
 /** @type {import("../../index").SecretType} */
@@ -34,16 +40,16 @@ const mock = {
   ]
 };
 const secret = fromJS(mock);
-export default function() {
-  useLogger('dev', { auto: true });
-  redirectTo({
-    url: ROUTES.INDEX()
-  });
-  // return (
-  //   <>
-  //     <Home />
-  //     {/* <SecretDetail secret={secret} /> */}
-  //   </>
-  // );
-  return null;
-}
+const Dev = () => {
+  const log = useLogger('dev', { auto: true });
+  // redirectTo({
+  //   url: ROUTES.INDEX()
+  // });
+  return (
+    // <Dialog show={true} use-slot show-confirm-button={false} title="社交">
+    <SecretForm secret={secret} />
+    // </Dialog>
+  );
+};
+
+export default Dev;

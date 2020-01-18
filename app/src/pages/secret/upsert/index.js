@@ -1,4 +1,4 @@
-import { View, redirectTo } from 'remax/wechat';
+import { View, redirectTo, navigateBack } from 'remax/wechat';
 import React, { useMemo, useCallback } from 'react';
 import useNavigationBar from '../../../hooks/use-navigation-bar';
 import { useContainer } from 'unstated-next';
@@ -30,12 +30,14 @@ export default function({ location: { query: { id } = {} } }) {
       const shouldMutate = !(secret && secret.equals(submittedSecret));
       log(shouldMutate);
       if (shouldMutate) {
-        const { _id } = await API.upsertSecret(submittedSecret.toJS());
-        updateItem(submittedSecret.set('_id', _id));
-        log(_id);
-        redirectTo({
-          url: ROUTES.SECRET_DETAIL({ id: _id })
-        });
+        const result = await API.upsertSecret(submittedSecret.toJS());
+        updateItem(
+          fromJS({
+            ...submittedSecret.toJS(),
+            ...result.toJS()
+          })
+        );
+        navigateBack();
       }
     },
     [updateItem, secret]

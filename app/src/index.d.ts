@@ -31,6 +31,7 @@ export interface SecretType {
     decoded: false;     // 是否已经解码过了
 }
 export type SecretRecord = Record<SecretType>;
+export type SocialRecord = Record<SocialType>;
 
 
 
@@ -49,3 +50,20 @@ export type UseForm<T = any> = (initState: T) => [
     UseFormErrors<T>,
     UseFormHandlers<T>,
 ];
+
+export enum UserStates {
+    NORMAL = 2,
+    NEW = 0,    // 新用户
+    NOT_SET_PASSWORD = 1,   // 还没设置过全局密码
+}
+
+export interface UserType {
+    _id: string;
+    since: number;  // 什么时候开始使用
+    state: UserStates;
+
+    // 前端自定
+    valid: boolean; // 是否要重新获取
+}
+
+export type UserRecord = Record<UserType>;

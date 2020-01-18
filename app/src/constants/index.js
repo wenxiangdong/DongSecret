@@ -41,5 +41,12 @@ export const SOCIAL_LOGOS = {
   [SOCIAL_IDS.SINA]: sinaSVG,
   [SOCIAL_IDS.GITHUB]: githubSVG
 };
+export const SOCIAL_TYPES = {
+  [SOCIAL_IDS.WECHAT]: '微信',
+  [SOCIAL_IDS.SINA]: '新浪',
+  [SOCIAL_IDS.GITHUB]: 'GitHub'
+};
 
 export const ONE_PASSWORD_KEY = 'DongSecret-one-password';
+
+export const TOAST_DURATION = 1500;

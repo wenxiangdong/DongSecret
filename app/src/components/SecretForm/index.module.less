@@ -1,16 +1,20 @@
 .panel {
-    position: relative;
-    min-height: 100vh;
-    box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
 
-    padding-bottom: calc(var(--button-default-height) + 3em);
+  padding-bottom: calc(var(--button-default-height) + 3em);
 
+  .submitButtonWrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 1em;
+  }
 
-    .submitButtonWrapper {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        padding: 1em;
-    }
+  .addWrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

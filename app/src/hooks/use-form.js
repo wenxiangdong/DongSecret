@@ -10,7 +10,7 @@ import useLogger from './use-logger';
 export const makeForm = (validationMap = {}, mapEventToValue = {}) => {
   const DEFAULT_GET_VALUE_FROM_EVENT = value => value;
   const useForm = initState => {
-    const log = useLogger('useForm');
+    const log = useLogger('useForm', { auto: false });
     /**
      * form state
      * @type {[
@@ -57,9 +57,18 @@ export const makeForm = (validationMap = {}, mapEventToValue = {}) => {
       []
     );
     const valid = useMemo(() => {
+      // 检测一次前置
+      const error = Object.keys(validationMap).some(key => {
+        const fns = validationMap[key] || [];
+        const value = formState.get(key);
+        const validationResult = fns.map(fn => fn?.(value)).filter(Boolean);
+        log(validationResult);
+        return !!validationResult.length;
+      });
       return !(
         formState.equals(fromJS(initState)) ||
-        Object.keys(initState).some(key => !!formError.get(key)?.length)
+        Object.keys(initState).some(key => !!formError.get(key)?.length) ||
+        error
       );
     }, [formError, formState]);
     return [formState, formError, handlers, valid];
