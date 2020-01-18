@@ -42,14 +42,15 @@ const mock = {
 const secret = fromJS(mock);
 const Dev = () => {
   const log = useLogger('dev', { auto: true });
-  // redirectTo({
-  //   url: ROUTES.INDEX()
-  // });
-  return (
-    // <Dialog show={true} use-slot show-confirm-button={false} title="社交">
-    <SecretForm secret={secret} />
-    // </Dialog>
-  );
+  redirectTo({
+    url: ROUTES.INDEX()
+  });
+  return null;
+  // return (
+  //   // <Dialog show={true} use-slot show-confirm-button={false} title="社交">
+  //   <SecretForm secret={secret} />
+  //   // </Dialog>
+  // );
 };
 
 export default Dev;

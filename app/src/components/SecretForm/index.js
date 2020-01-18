@@ -227,6 +227,7 @@ export default function({ secret, onSubmit }) {
           <View>
             <Button
               plain
+              hairline
               size="small"
               type="info"
               bindclick={() => setShowAddSocialDialog(true)}
