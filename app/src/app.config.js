@@ -10,7 +10,7 @@ module.exports = {
     'pages/setting/about/index'
   ],
   window: {
-    navigationBarTitleText: '东密码',
+    navigationBarTitleText: 'One Password',
     navigationBarBackgroundColor: '#282c34'
   }
 };
