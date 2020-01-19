@@ -18,12 +18,11 @@ export default function({ location: { query: { id } = {} } }) {
 
   const log = useLogger('/pages/secret/upsert');
 
-  const { getItem, updateItem } = useContainer(SecretsStore);
-
-  const secret = useMemo(() => {
-    const item = getItem(id);
-    return item;
-  }, [id, getItem]);
+  const { secrets, updateItem } = useContainer(SecretsStore);
+  const secret = useMemo(() => secrets.find(item => item.get('_id') === id), [
+    id,
+    secrets
+  ]);
 
   const handleSubmit = useCallback(
     async submittedSecret => {

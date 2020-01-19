@@ -1,0 +1,8 @@
+[
+  {
+    "name": "auth",
+    "value": {
+      "$url": "auth"
+    }
+  }
+]

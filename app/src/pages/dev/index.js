@@ -4,7 +4,7 @@ import { ROUTES, SOCIAL_IDS } from '../../constants';
 import SecretListContainer from '../../containers/SecretListContainer';
 import useLogger from '../../hooks/use-logger';
 import { getRandomString } from '../../apis/__mock__';
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 import SecretForm from '../../components/SecretForm';
 import Background from '../../components/common/Background';
 import Setting from '../index/setting';

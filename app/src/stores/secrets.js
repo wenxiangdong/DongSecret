@@ -1,72 +1,53 @@
-import {createContainer, useContainer} from 'unstated-next';
-import {useState, useCallback, useMemo} from 'react';
-import {fromJS, Record, List, Map} from 'immutable';
+import { createContainer, useContainer } from 'unstated-next';
+import { useState, useCallback, useMemo } from 'react';
+import { fromJS, Record, List, Map } from 'immutable';
 /**
  * @typedef {Record<import("../index").SecretType>} SecretItem
  *
  */
 const useSecrets = () => {
-    /** 
-     * @typedef {Map<string, SecretItem>} SecretMap
-     * @type {[SecretMap, React.Dispatch<React.SetStateAction<SecretMap>>]}
-     */ 
-    const [secretMap, setSecretMap] = useState(Map());
+  const [secretList, setList] = useState(List());
 
-    const secretList = useMemo(() => secretMap.toList(), [secretMap]);
+  /** 清空 */
+  const clearList = useCallback(() => {
+    setList(List());
+  }, []);
 
+  /** 增加 */
+  const add = useCallback((...secrets) => {
+    setList(preList => preList.push(...secrets));
+  }, []);
 
-    /** 清空 */
-    const clearList = useCallback(() => {
-        setList(Map());
-    }, []);
+  /** 更新全部 */
+  const setAll = useCallback(secrets => {
+    setList(List.of(...secrets));
+  }, []);
 
-    /** 增加 */
-    const add = useCallback((...secrets) => {
-        setSecretMap(preMap => secrets.reduce(
-            (result, cur) => result.set(cur.get('_id'), cur),
-            preMap
-        ));
-    }, []);
+  /** 更新某一项，如果不存在，则加入 */
+  const updateItem = useCallback((/** @type {SecretItem} */ item) => {
+    setList(preList => {
+      const index = preList.findIndex(
+        secret => secret.get('_id') === item.get('_id')
+      );
+      console.log(index, item.toJS());
+      return index < 0 ? preList.push(item) : preList.set(index, item);
+    });
+  }, []);
 
-    /** 更新全部 */
-    const setAll = useCallback((secrets) => {
-        setSecretMap(secrets.reduce(
-            (result, cur) => result.set(cur.get('_id'), cur),
-            Map()
-        ));
-    }, []);
+  /** 删除一些 */
+  const remove = useCallback((/** @type {SecretItem[]} */ ...secrets) => {
+    const ids = secrets.map(item => item.get('_id'));
+    setList(preList => preList.filter(item => !ids.includes(item.get('_id'))));
+  }, []);
 
-    /** 更新某一项 */
-    const updateItem = useCallback((/** @type {SecretItem} */item) => {
-        setSecretMap(preMap => preMap.set(item.get('_id'), item));
-    }, []);
-
-    /** 删除一些 */
-    const remove = useCallback((/** @type {SecretItem[]} */...secrets) => {
-        const ids = secrets.map(item => item.get('_id'));
-        setSecretMap(preMap => {
-            console.log('remove', ids, preMap.toJS());
-            return preMap.deleteAll(ids);
-        });
-    }, []);
-
-    /** 拿某个 */
-    /**
-     * @type {(id: string) => SecretItem}
-     */
-    const getItem = (id) => {
-        return secretMap.get(id);
-    }
-
-    return {
-        clearList,
-        add,
-        setAll,
-        updateItem,
-        remove,
-        getItem,
-        secrets: secretList,
-    };
+  return {
+    clearList,
+    add,
+    setAll,
+    updateItem,
+    remove,
+    secrets: secretList
+  };
 };
 
 export const SecretsStore = createContainer(useSecrets);

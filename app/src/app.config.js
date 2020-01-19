@@ -1,6 +1,6 @@
 module.exports = {
   pages: [
-    'pages/dev/index',
+    // 'pages/dev/index',
     'pages/index/index',
 
     'pages/secret/detail/index',

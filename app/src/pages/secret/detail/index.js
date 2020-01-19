@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   navigateTo,
@@ -97,12 +97,14 @@ const DeleteSecretButton = props => {
 };
 
 export default props => {
-  const log = useLogger('secret/detail/index');
-
-  log(props.location.query);
-  const { getItem, remove, updateItem } = useContainer(SecretsStore);
-  const secret = getItem(props.location.query.id);
-  log(secret);
+  const id = props.location.query.id;
+  const log = useLogger('secret/detail/index', { auto: false });
+  const { secrets, remove, updateItem } = useContainer(SecretsStore);
+  const secret = useMemo(() => secrets.find(item => item.get('_id') === id), [
+    secrets,
+    id
+  ]);
+  log(secret?.toJS());
 
   const handleDelete = useCallback(async () => {
     await API.deleteSecret(secret.get('_id'));

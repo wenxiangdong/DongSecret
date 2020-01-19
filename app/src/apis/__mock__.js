@@ -45,7 +45,10 @@ export const mockGetMySecrets = async () => {
   return fromJS(
     Array(20)
       .fill(undefined)
-      .map((_, index) => createSecret(index))
+      .map((_, index) => ({
+        ...createSecret(index),
+        createAt: Date.now() + index * 10000
+      }))
   );
 };
 
@@ -54,9 +57,9 @@ export const mockDeleteSecret = async () => {
   return true;
 };
 
-export const mockUpsertSecret = async () => {
+export const mockUpsertSecret = async item => {
   await timeout();
-  return fromJS({ _id: getRandomString() });
+  return fromJS({ _id: item['_id'] || getRandomString() });
 };
 
 /**
