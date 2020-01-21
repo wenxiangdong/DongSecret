@@ -28,7 +28,7 @@ export interface SecretType {
     createAt: number;
 
     // 前端自加
-    decoded: false;     // 是否已经解码过了
+    decoded: string;     // 是否已经解码过了
 }
 export type SecretRecord = Record<SecretType>;
 export type SocialRecord = Record<SocialType>;

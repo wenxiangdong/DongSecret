@@ -7,7 +7,12 @@ import {
   mockSetOnePassword
 } from './__mock__';
 import { fromJS, List } from 'immutable';
+import { callCloudFunction } from './cloud';
+import { PATHS } from './paths';
 
+/**
+ * 是否使用MOCK
+ */
 const USE_MOCK = true;
 /**
  *
@@ -23,14 +28,18 @@ const decode = async password => {
  * @type {() => List<Record<import('..').SecretType>>}
  */
 const getMySecrets = async () => {
-  return List();
+  const secrets = await callCloudFunction(PATHS.GET_SECRETS);
+  return fromJS(secrets);
 };
 /**
  *
  * @param {String} id
  */
 const deleteSecret = async id => {
-  return true;
+  const removed = await callCloudFunction(PATHS.DELETE_SECRET, {
+    ids: [id]
+  });
+  return removed;
 };
 /**
  *
@@ -38,7 +47,10 @@ const deleteSecret = async id => {
  * @returns {{_id: String}}
  */
 const upsertSecret = async secret => {
-  return undefined;
+  const updatedSecret = await callCloudFunction(PATHS.UPSERT_SECRET, {
+    secret
+  });
+  return fromJS(updatedSecret);
 };
 
 //============ one password相关 =================//
@@ -48,7 +60,8 @@ const setOnePassword = (newPassword, oldPassword = '') => {
 
 //=============== 用户相关 ====================//
 const auth = async () => {
-  return undefined;
+  const user = await callCloudFunction(PATHS.AUTH);
+  return fromJS(user);
 };
 
 export const API = {

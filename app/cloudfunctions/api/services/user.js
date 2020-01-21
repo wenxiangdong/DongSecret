@@ -1,6 +1,6 @@
-const { NotFoundError } = require('./errors');
-const cloud = require('wx-server-sdk');
-const CollectionNames = require('./collection-names');
+const { NotFoundError } = require('../constants/errors');
+const CollectionNames = require('../constants/collection-names');
+const db = require('../db');
 
 const UserStates = {
   NORMAL: 2,
@@ -8,7 +8,7 @@ const UserStates = {
   NOT_SET_PASSWORD: 1 // 还没设置过全局密码
 };
 
-const collection = cloud.database().collection(CollectionNames.user);
+const collection = db.collection(CollectionNames.user);
 
 const auth = async openid => {
   const { data: [user] = [] } = await collection

@@ -63,14 +63,16 @@ export default function(props) {
     } else if (decodedPassword) {
       return decodedPassword;
     } else {
-      return secret.get('password');
+      return secret.get('decoded')
+        ? secret.get('decoded')
+        : secret.get('password');
     }
   }, [secret, decodedPassword, decoding]);
 
   /** 更新秘密项的decoded属性 */
   useEffect(() => {
     if (decodedPassword) {
-      onUpdate?.(secret.set('decoded', true).set('password', decodedPassword));
+      onUpdate?.(secret.set('decoded', decodedPassword));
     }
   }, [decodedPassword, onUpdate, secret]);
 

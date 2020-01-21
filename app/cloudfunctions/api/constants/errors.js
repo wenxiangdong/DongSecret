@@ -22,9 +22,16 @@ class ServerError extends MyError {
   }
 }
 
+class UpdateError extends MyError {
+  constructor(message) {
+    super(message, 500);
+  }
+}
+
 module.exports = {
   MyError,
   NotFoundError,
   BadRequestError,
-  ServerError
+  ServerError,
+  UpdateError
 };

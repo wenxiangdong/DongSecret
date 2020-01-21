@@ -4,5 +4,35 @@
     "value": {
       "$url": "auth"
     }
+  },
+  {
+    "name": "upser_secret",
+    "value": {
+      "$url": "upsert_secret",
+      "secret": {
+        "name": "test",
+        "account": "test",
+        "password": "test",
+        "phone": "19852811088",
+        "socialList": []
+      },
+      "key": "secret"
+    }
+  },
+  {
+    "name": "set_one_password",
+    "value": {
+      "$url": "set_one_password",
+      "oldKey": "secret",
+      "newKey": "new_secret"
+    }
+  },
+  {
+    "name": "decode",
+    "value": {
+      "$url": "decode_password",
+      "password": "KyGxlDTkGS3VTcgnFIrlqA==",
+      "key": "secret"
+    }
   }
 ]
