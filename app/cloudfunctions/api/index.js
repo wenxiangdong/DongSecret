@@ -8,10 +8,11 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 // 云函数入口函数
 exports.main = async (event, context) => {
   const app = new TcbRouter({ event });
-  const { OPENID } = cloud.getWXContext();
+  const { OPENID, ENV } = cloud.getWXContext();
 
   app.use(async (ctx, next) => {
     console.log('openid', OPENID);
+    console.log('env', ENV);
     console.log('event', event);
     await next();
     console.log('result', ctx.body);

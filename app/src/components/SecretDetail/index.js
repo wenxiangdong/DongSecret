@@ -63,18 +63,9 @@ export default function(props) {
     } else if (decodedPassword) {
       return decodedPassword;
     } else {
-      return secret.get('decoded')
-        ? secret.get('decoded')
-        : secret.get('password');
+      return secret.get('password');
     }
   }, [secret, decodedPassword, decoding]);
-
-  /** 更新秘密项的decoded属性 */
-  useEffect(() => {
-    if (decodedPassword) {
-      onUpdate?.(secret.set('decoded', decodedPassword));
-    }
-  }, [decodedPassword, onUpdate, secret]);
 
   //======== elements =========//
   /** 标题 */
@@ -90,7 +81,7 @@ export default function(props) {
   /** 主要信息 */
   const mainInfo = useMemo(() => {
     const phone = secret.get('phone');
-    const decodeButton = !secret.get('decoded') && (
+    const decodeButton = !decodedPassword && (
       <OperationButton bindclick={decode} type="primary">
         解码
       </OperationButton>
@@ -100,7 +91,7 @@ export default function(props) {
         data: displayPassword
       });
     };
-    const copyPasswordButton = !!secret.get('decoded') && (
+    const copyPasswordButton = !!decodedPassword && (
       <OperationButton
         bindclick={() => setClipboardData({ data: displayPassword })}
         type="default"
@@ -133,7 +124,7 @@ export default function(props) {
         )}
       </CellGroup>
     );
-  }, [secret, displayPassword, decode]);
+  }, [secret, displayPassword, decode, decodedPassword]);
 
   /** 额外信息 */
   const extraInfo = useMemo(() => {

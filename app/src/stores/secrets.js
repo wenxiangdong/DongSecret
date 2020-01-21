@@ -20,7 +20,7 @@ const useSecrets = () => {
 
   /** 更新全部 */
   const setAll = useCallback(secrets => {
-    setList(List.of(...secrets));
+    setList(fromJS(secrets));
   }, []);
 
   /** 更新某一项，如果不存在，则加入 */

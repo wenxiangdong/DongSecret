@@ -13,14 +13,18 @@ import { PATHS } from './paths';
 /**
  * 是否使用MOCK
  */
-const USE_MOCK = true;
+const USE_MOCK = false;
 /**
  *
  * @param {String} password
  * @returns {Promise<String>}
  */
-const decode = async password => {
-  return password;
+const decode = async (password, key) => {
+  const result = await callCloudFunction(PATHS.DECODE_PASSWORD, {
+    password,
+    key
+  });
+  return result;
 };
 
 //================== 密码项相关 ========================//
@@ -46,16 +50,22 @@ const deleteSecret = async id => {
  * @param {*} secret
  * @returns {{_id: String}}
  */
-const upsertSecret = async secret => {
+const upsertSecret = async (secret, key) => {
+  delete secret.decoded;
   const updatedSecret = await callCloudFunction(PATHS.UPSERT_SECRET, {
-    secret
+    secret,
+    key
   });
   return fromJS(updatedSecret);
 };
 
 //============ one password相关 =================//
-const setOnePassword = (newPassword, oldPassword = '') => {
-  return undefined;
+const setOnePassword = async (newKey, oldKey = '') => {
+  const result = await callCloudFunction(PATHS.SET_ONE_PASSWORD, {
+    newKey,
+    oldKey
+  });
+  return true;
 };
 
 //=============== 用户相关 ====================//

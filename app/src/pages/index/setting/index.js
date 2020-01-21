@@ -38,7 +38,7 @@ const MenuItem = props => {
  * */
 const MENU_LIST = [
   {
-    name: '全局密码',
+    name: 'one password',
     link: ROUTES.UPDATE_PASSWORD(),
     icon: 'lock'
   },

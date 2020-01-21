@@ -11,21 +11,16 @@ import { SecretsStore } from '../../stores/secrets';
 import useLogger from '../../hooks/use-logger';
 import withErrorBoundary from '../../hocs/with-error-boundary';
 import { usePullDownRefresh, stopPullDownRefresh } from 'remax/wechat';
+import useSecrets from '../../hooks/use-secrets';
 /**
  *
  * @param {{keyword: String}} param0
  */
 function SecretListContainer({ keyword = '' }) {
-  const { result, loading, error, call } = useAsync(API.getMySecrets);
+  const { secrets, error, loading, reload } = useSecrets(true);
   if (error) {
     throw error;
   }
-  /**
-   * @type {{
-   * secrets: import('immutable').List<import('immutable').Record<import('../..').SecretType>>
-   * }}
-   */
-  const { setAll, secrets } = useContainer(SecretsStore);
   // 按创建时间排序的，最近的放前面
   const displaySecrets = useMemo(
     () =>
@@ -40,17 +35,10 @@ function SecretListContainer({ keyword = '' }) {
   );
   const log = useLogger('SecretListContainer', { auto: false });
 
-  /** 更新 store */
-  useEffect(() => {
-    if (result) {
-      setAll(result);
-    }
-  }, [result]);
-
   /** 下拉更新 */
   usePullDownRefresh(() => {
     log('pull down');
-    call().finally(() => {
+    reload().finally(() => {
       stopPullDownRefresh();
     });
   });

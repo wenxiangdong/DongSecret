@@ -1,5 +1,5 @@
 import { useContainer } from 'unstated-next';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import useAsync from './use-async';
 import { API } from '../apis';
 import { PasswordStore } from '../stores/password';
@@ -38,9 +38,10 @@ export default function(password) {
   /**
    * 解码 api 调用
    */
-  const decodeApiAsync = useCallback(async () => API.decode(password), [
-    password
-  ]);
+  const decodeApiAsync = useCallback(
+    async () => API.decode(password, globalPassword),
+    [password, globalPassword]
+  );
 
   /**
    * use async
@@ -48,6 +49,7 @@ export default function(password) {
   const { result, loading, error, call } = useAsync(decodeApiAsync, {
     autoCall: false
   });
+
   /**
    * 向外暴露的解码方法
    */

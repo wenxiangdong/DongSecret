@@ -13,6 +13,8 @@ import useAsync from '../../../hooks/use-async';
 import { API } from '../../../apis';
 import withAuth from '../../../hocs/with-auth';
 import WhiteSpace from '../../../components/common/WhiteSpace';
+import withToast from '../../../hocs/with-toast';
+import useSecrets from '../../../hooks/use-secrets';
 
 const SectionTitle = ({ title, desc }) => {
   return (
@@ -55,6 +57,9 @@ const UpdatePassword = props => {
     error: apiError
   } = useAsync(asyncSetOnePasswordApi, { autoCall: false });
 
+  /** use secrets */
+  const { reload } = useSecrets(false);
+
   /** api调用结果副作用 */
   useEffect(() => {
     if (!!apiError) {
@@ -67,6 +72,9 @@ const UpdatePassword = props => {
     }
     if (!!apiResult) {
       setGlobalPassword(newPassword);
+      setUser(user.set('state', 2));
+      reload();
+
       showToast({
         title: `设置成功`,
         icon: 'success',
@@ -142,4 +150,4 @@ const UpdatePassword = props => {
   );
 };
 
-export default withAuth(UpdatePassword);
+export default withToast(UpdatePassword);

@@ -1,6 +1,7 @@
 import { cloud, showToast } from 'remax/wechat';
+import { ENVS } from '../constants/index';
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({ env: ENVS.production });
 const CLOUD_FUNCTION_NAME = 'api';
 export const callCloudFunction = async (path, param = {}) => {
   const { result } = await cloud.callFunction({

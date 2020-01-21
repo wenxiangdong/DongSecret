@@ -8,8 +8,10 @@ import { API } from '../../../apis';
 import useLogger from '../../../hooks/use-logger';
 import { fromJS } from 'immutable';
 import { ROUTES } from '../../../constants';
+import { PasswordStore } from '../../../stores/password';
+import withAuth from '../../../hocs/with-auth';
 
-export default function({ location: { query: { id } = {} } }) {
+const Upsert = ({ location: { query: { id } = {} } }) => {
   const isNew = useMemo(() => !id);
   const navigationBarTitle = useMemo(() => (isNew ? '新建秘密' : '修改秘密'), [
     isNew
@@ -18,6 +20,7 @@ export default function({ location: { query: { id } = {} } }) {
 
   const log = useLogger('/pages/secret/upsert');
 
+  const [key] = useContainer(PasswordStore);
   const { secrets, updateItem } = useContainer(SecretsStore);
   const secret = useMemo(() => secrets.find(item => item.get('_id') === id), [
     id,
@@ -29,7 +32,7 @@ export default function({ location: { query: { id } = {} } }) {
       const shouldMutate = !(secret && secret.equals(submittedSecret));
       log(shouldMutate);
       if (shouldMutate) {
-        const result = await API.upsertSecret(submittedSecret.toJS());
+        const result = await API.upsertSecret(submittedSecret.toJS(), key);
         updateItem(
           fromJS({
             ...submittedSecret.toJS(),
@@ -39,7 +42,7 @@ export default function({ location: { query: { id } = {} } }) {
         navigateBack();
       }
     },
-    [updateItem, secret]
+    [updateItem, secret, key]
   );
 
   return (
@@ -47,4 +50,6 @@ export default function({ location: { query: { id } = {} } }) {
       <SecretForm secret={secret} onSubmit={handleSubmit} />
     </>
   );
-}
+};
+
+export default withAuth(Upsert);

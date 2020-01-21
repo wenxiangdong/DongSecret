@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 export const DEFAULT_USER = fromJS({
   _id: '',
   since: 0,
-  state: 0,
+  state: Number.MIN_SAFE_INTEGER,
   valid: false
 });
 

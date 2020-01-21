@@ -35,6 +35,7 @@ const setOnePassword = async (openid, newKey, oldKey) => {
         PasswordUtil.decode(oldPassword, oldKey),
         newKey
       );
+      console.log(oldPassword, newPassword);
       return newPassword;
     });
 

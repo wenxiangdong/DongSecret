@@ -8,8 +8,10 @@ const stringifyQuery = object =>
 /** 路由 */
 export const ROUTES = {
   SETTING: () => '/pages/setting/index',
-  UPDATE_PASSWORD: () => '/pages/setting/update-password/index',
-  ABOUT: () => `/pages/setting/about/index`,
+  UPDATE_PASSWORD: ({ message = '' } = {}) =>
+    `/pages/setting/update-password/index?message=${message}`,
+  ABOUT: ({ message = '' } = {}) =>
+    `/pages/setting/about/index?message=${message}`,
 
   INDEX: () => '/pages/index/index',
 
@@ -50,3 +52,14 @@ export const SOCIAL_TYPES = {
 export const ONE_PASSWORD_KEY = 'DongSecret-one-password';
 
 export const TOAST_DURATION = 1500;
+
+export const UserStates = {
+  NORMAL: 2,
+  NEW: 0, // 新用户
+  NOT_SET_PASSWORD: 1 // 还没设置过全局密码
+};
+
+export const ENVS = {
+  dev: 'dev-ukxoq',
+  production: 'production-one-password'
+};
