@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import styles from './index.module.less';
-import { View, showToast, navigateTo, navigateBack } from 'remax/wechat';
+import {
+  View,
+  showToast,
+  navigateTo,
+  navigateBack,
+  redirectTo
+} from 'remax/wechat';
 import { ROUTES, TOAST_DURATION } from '../../../constants';
 import { useContainer } from 'unstated-next';
 import { PasswordStore } from '../../../stores/password';
@@ -15,6 +21,7 @@ import withAuth from '../../../hocs/with-auth';
 import WhiteSpace from '../../../components/common/WhiteSpace';
 import withToast from '../../../hocs/with-toast';
 import useSecrets from '../../../hooks/use-secrets';
+import { UserStates } from '../../../constants/index';
 
 const SectionTitle = ({ title, desc }) => {
   return (
@@ -72,7 +79,6 @@ const UpdatePassword = props => {
     }
     if (!!apiResult) {
       setGlobalPassword(newPassword);
-      setUser(user.set('state', 2));
       reload();
 
       showToast({
@@ -81,7 +87,11 @@ const UpdatePassword = props => {
         duration: TOAST_DURATION
       });
       setTimeout(() => {
-        navigateBack();
+        /** 用户本地状态置为false，需要重新获取 */
+        setUser(pre => pre.set('valid', false));
+        navigateBack().catch(e => {
+          redirectTo({ url: ROUTES.INDEX() });
+        });
       }, TOAST_DURATION);
     }
   }, [apiResult, apiError]);

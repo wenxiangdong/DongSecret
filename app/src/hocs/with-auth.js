@@ -11,23 +11,6 @@ import { ROUTES } from '../constants';
 
 export default WrappedComponent => props => {
   const [user, setUser] = useContainer(UserStore);
-  const [authComplete, setAuthComplete] = useState(user.get('valid'));
-
-  const handleUserStateFns = useMemo(
-    () => [
-      () =>
-        navigateTo({ url: ROUTES.ABOUT({ message: '欢迎使用 One Password' }) }),
-      () => {
-        redirectTo({
-          url: ROUTES.UPDATE_PASSWORD({ message: '请先设置 one password' })
-        });
-      },
-      () => {
-        setAuthComplete(true);
-      }
-    ],
-    []
-  );
 
   const {
     result: authResult,
@@ -38,8 +21,14 @@ export default WrappedComponent => props => {
 
   // user 状态
   useEffect(() => {
-    handleUserStateFns[user.get('state')]?.();
-  }, [user, handleUserStateFns]);
+    if (user.get('valid')) {
+      if (user.get('state') < UserStates.NORMAL) {
+        redirectTo({
+          url: ROUTES.UPDATE_PASSWORD({ message: '请先设置 one password' })
+        });
+      }
+    }
+  }, [user]);
 
   // 调用结果
   useEffect(() => {
@@ -54,7 +43,7 @@ export default WrappedComponent => props => {
     }
   }, [authResult, authError]);
 
-  return user.get('valid') && authComplete ? (
+  return user.get('state') >= UserStates.NORMAL ? (
     <WrappedComponent {...props} />
   ) : (
     <AuthLayer loading={authLoading} error={authError} retry={authCall} />
