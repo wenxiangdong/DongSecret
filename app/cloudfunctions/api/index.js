@@ -2,8 +2,9 @@
 const cloud = require('wx-server-sdk');
 const TcbRouter = require('tcb-router');
 const ROUTES = require('./constants/routes');
+const env = require('./constants/envs');
 
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+cloud.init({ env: env });
 
 // 云函数入口函数
 exports.main = async (event, context) => {
