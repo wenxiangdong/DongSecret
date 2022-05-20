@@ -14,7 +14,7 @@ import Loading from '../../components/common/Loading';
 import withAuth from '../../hocs/with-auth';
 import AuthLayer from '../../components/common/AuthLayer';
 import SocialForm from '../../components/SocialForm';
-import Dialog from '@vant/weapp/dist/dialog';
+import Dialog from '@vant/weapp/lib/dialog';
 // import SecretDetail from '../../components/SecretDetail';
 
 /** @type {import("../../index").SecretType} */

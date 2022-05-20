@@ -14,7 +14,7 @@ import { UserStore } from '../../../stores/user';
 import useLogger from '../../../hooks/use-logger';
 import useNavigationBar from '../../../hooks/use-navigation-bar';
 import PasswordInput from '../../../components/PasswordInput';
-import Button from '@vant/weapp/dist/button';
+import Button from '@vant/weapp/lib/button';
 import useAsync from '../../../hooks/use-async';
 import { API } from '../../../apis';
 import withAuth from '../../../hocs/with-auth';

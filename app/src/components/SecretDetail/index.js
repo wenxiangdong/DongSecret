@@ -1,9 +1,9 @@
 import React, { useMemo, useEffect, useCallback } from 'react';
-import Panel from '@vant/weapp/dist/panel';
-import CellGroup from '@vant/weapp/dist/cell-group';
-import Field from '@vant/weapp/dist/field';
-import Icon from '@vant/weapp/dist/icon';
-import Button from '@vant/weapp/dist/button';
+import Panel from '@vant/weapp/lib/panel';
+import CellGroup from '@vant/weapp/lib/cell-group';
+import Field from '@vant/weapp/lib/field';
+import Icon from '@vant/weapp/lib/icon';
+import Button from '@vant/weapp/lib/button';
 import styles from './index.module.less';
 import { View, setClipboardData, Text } from 'remax/wechat';
 import usePassword from '../../hooks/use-password';
@@ -48,7 +48,7 @@ const OperationButton = ({
  *  onUpdate: (secret: import("../..").SecretRecord) => void;
  * }} props
  */
-export default function(props) {
+export default function (props) {
   const { secret, onUpdate } = props;
   if (!secret) return null;
 

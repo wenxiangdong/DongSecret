@@ -7,7 +7,7 @@ import {
   showModal
 } from 'remax/wechat';
 import { fromJS } from 'immutable';
-import Button from '@vant/weapp/dist/button';
+import Button from '@vant/weapp/lib/button';
 import styles from './index.module.less';
 import SecretDetail from '../../../components/SecretDetail';
 import useLogger from '../../../hooks/use-logger';
@@ -100,10 +100,10 @@ export default props => {
   const id = props.location.query.id;
   const log = useLogger('secret/detail/index', { auto: false });
   const { secrets, remove, updateItem } = useContainer(SecretsStore);
-  const secret = useMemo(() => secrets.find(item => item.get('_id') === id), [
-    secrets,
-    id
-  ]);
+  const secret = useMemo(
+    () => secrets.find(item => item.get('_id') === id),
+    [secrets, id]
+  );
   log(secret?.toJS());
 
   const handleDelete = useCallback(async () => {

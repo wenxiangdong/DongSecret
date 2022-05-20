@@ -22,7 +22,7 @@ const goToUpdatePassword = async () => {
   } catch (error) {}
 };
 
-export default function(password) {
+export default function (password) {
   const [globalPassword] = useContainer(PasswordStore);
   /**
    * 检查是否存在全局本地密码
@@ -63,6 +63,7 @@ export default function(password) {
     decodedPassword: result,
     decoding: loading,
     error,
-    decode
+    decode,
+    checkIfExistGlobalPassword
   };
 }

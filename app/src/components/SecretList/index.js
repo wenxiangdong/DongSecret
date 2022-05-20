@@ -9,9 +9,9 @@ import { Record, List } from 'immutable';
 import { View, navigateTo, Text } from 'remax/wechat';
 import styles from './index.module.less';
 import { COLOR_LIST, ROUTES } from '../../constants';
-import Skeleton from '@vant/weapp/dist/skeleton';
-import Icon from '@vant/weapp/dist/icon';
-import Button from '@vant/weapp/dist/button';
+import Skeleton from '@vant/weapp/lib/skeleton';
+import Icon from '@vant/weapp/lib/icon';
+import Button from '@vant/weapp/lib/button';
 import { useContainer } from 'unstated-next';
 import { SecretsStore } from '../../stores/secrets';
 import MountedTransition from '../common/MountedTransition';
@@ -118,7 +118,7 @@ export const SecretListError = ({ error }) => {
  * secretList: List<Record<import('../..').SecretType>>;
  * }} props
  */
-export default function({ secretList }) {
+export default function ({ secretList }) {
   const secretNodes = secretList.map((item, index) => (
     <MountedTransition
       key={item.get('_id')}

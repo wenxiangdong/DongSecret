@@ -1,7 +1,7 @@
 import React from 'react';
-import Field from '@vant/weapp/dist/field';
-import Icon from '@vant/weapp/dist/icon';
-import Button from '@vant/weapp/dist/button';
+import Field from '@vant/weapp/lib/field';
+import Icon from '@vant/weapp/lib/icon';
+import Button from '@vant/weapp/lib/button';
 import { SOCIAL_LOGOS } from '../../constants';
 import { View } from 'remax/wechat';
 
@@ -12,7 +12,7 @@ import { View } from 'remax/wechat';
  * onDelete: (socialItem: SocialRecord) => void;
  * }} props
  */
-export default function({ socialItem, onDelete }) {
+export default function ({ socialItem, onDelete }) {
   const icon = SOCIAL_LOGOS[socialItem.get('id')];
   return (
     <Field

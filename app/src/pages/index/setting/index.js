@@ -3,7 +3,7 @@ import { View, navigateTo } from 'remax/wechat';
 import styles from './index.module.less';
 import UserInfo from '../../../components/UserInfo';
 import Background from '../../../components/common/Background';
-import Icon from '@vant/weapp/dist/icon';
+import Icon from '@vant/weapp/lib/icon';
 import { ROUTES } from '../../../constants/index';
 
 /**

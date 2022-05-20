@@ -4,7 +4,7 @@ import styles from './index.module.less';
 import { fromJS } from 'immutable';
 import SecretListContainer from '../../../containers/SecretListContainer';
 import { AddSecret } from '../../../components/SecretList';
-import Search from '@vant/weapp/dist/search';
+import Search from '@vant/weapp/lib/search';
 import useLogger from '../../../hooks/use-logger';
 
 export default () => {

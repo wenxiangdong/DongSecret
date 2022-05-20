@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import Skeleton from '@vant/weapp/dist/skeleton';
+import Skeleton from '@vant/weapp/lib/skeleton';
 import { API } from '../../apis';
 import useAsync from '../../hooks/use-async';
 import SecretList, {
@@ -10,7 +10,7 @@ import { useContainer } from 'unstated-next';
 import { SecretsStore } from '../../stores/secrets';
 import useLogger from '../../hooks/use-logger';
 import withErrorBoundary from '../../hocs/with-error-boundary';
-import { usePullDownRefresh, stopPullDownRefresh } from 'remax/wechat';
+import { usePageEvent } from 'remax/macro';
 import useSecrets from '../../hooks/use-secrets';
 /**
  *
@@ -36,11 +36,9 @@ function SecretListContainer({ keyword = '' }) {
   const log = useLogger('SecretListContainer', { auto: false });
 
   /** 下拉更新 */
-  usePullDownRefresh(() => {
+  usePageEvent('onPullDownRefresh', () => {
     log('pull down');
-    reload().finally(() => {
-      stopPullDownRefresh();
-    });
+    return reload();
   });
 
   return (

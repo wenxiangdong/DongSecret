@@ -1,11 +1,11 @@
 import React, { useMemo, useCallback, useEffect } from 'react';
 import styles from './index.module.less';
 import { View } from 'remax/wechat';
-import Panel from '@vant/weapp/dist/panel';
-import Field from '@vant/weapp/dist/field';
-import RadioGroup from '@vant/weapp/dist/radio-group';
-import Radio from '@vant/weapp/dist/radio';
-import Button from '@vant/weapp/dist/button';
+import Panel from '@vant/weapp/lib/panel';
+import Field from '@vant/weapp/lib/field';
+import RadioGroup from '@vant/weapp/lib/radio-group';
+import Radio from '@vant/weapp/lib/radio';
+import Button from '@vant/weapp/lib/button';
 import { makeForm, Validators } from '../../hooks/use-form';
 import { SOCIAL_IDS, SOCIAL_TYPES } from '../../constants';
 import useLogger from '../../hooks/use-logger';

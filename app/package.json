@@ -14,13 +14,13 @@
     "build": "set NODE_ENV=production && remax build -t wechat"
   },
   "dependencies": {
+    "@remax/plugin-less": "^1.0.0",
     "@vant/weapp": "^1.0.2",
     "clsx": "^1.0.4",
     "immutable": "^4.0.0-rc.12",
     "less": "^3.10.3",
     "react": "^16.8.6",
-    "remax": "^1.1.0",
-    "remax-cli": "^1.1.0",
+    "remax": "^2.0.0",
     "rimraf": "^2.6.3",
     "unstated-next": "^1.1.0"
   },

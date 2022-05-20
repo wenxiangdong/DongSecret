@@ -8,10 +8,11 @@ import AuthLayer from '../components/common/AuthLayer';
 import { fromJS } from 'immutable';
 import { UserStates, TOAST_DURATION } from '../constants/index';
 import { ROUTES } from '../constants';
+import usePassword from '../hooks/use-password';
 
 export default WrappedComponent => props => {
   const [user, setUser] = useContainer(UserStore);
-
+  const { checkIfExistGlobalPassword } = usePassword();
   const {
     result: authResult,
     loading: authLoading,
@@ -26,6 +27,8 @@ export default WrappedComponent => props => {
         redirectTo({
           url: ROUTES.UPDATE_PASSWORD({ message: '请先设置 one password' })
         });
+      } else {
+        checkIfExistGlobalPassword();
       }
     }
   }, [user]);

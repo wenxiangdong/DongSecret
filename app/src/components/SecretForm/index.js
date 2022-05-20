@@ -2,12 +2,12 @@ import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './index.module.less';
 import { View, showToast } from 'remax/wechat';
 import { makeForm, Validators } from '../../hooks/use-form';
-import Field from '@vant/weapp/dist/field';
-import CellGroup from '@vant/weapp/dist/cell-group';
-import Button from '@vant/weapp/dist/button';
-import Panel from '@vant/weapp/dist/panel';
-import Dialog from '@vant/weapp/dist/dialog';
-import Cell from '@vant/weapp/dist/cell';
+import Field from '@vant/weapp/lib/field';
+import CellGroup from '@vant/weapp/lib/cell-group';
+import Button from '@vant/weapp/lib/button';
+import Panel from '@vant/weapp/lib/panel';
+import Dialog from '@vant/weapp/lib/dialog';
+import Cell from '@vant/weapp/lib/cell';
 import useLogger from '../../hooks/use-logger';
 import SocialItem from '../SocialItem';
 import { List } from 'immutable';
@@ -86,7 +86,7 @@ const MAIN_INFO_FORM_CONFIGS = {
       value => {
         const isEmpty = !value;
         const validPhoneNumber = /^1[0-9]{10}$/.test(value);
-        return (isEmpty || validPhoneNumber) ? undefined : '手机号码不正确';
+        return isEmpty || validPhoneNumber ? undefined : '手机号码不正确';
       }
     ],
     placeholder: '该账号绑定的手机号码',
@@ -117,7 +117,7 @@ const useForm = makeSecretForm(
  * onSubmit: (secret: import("../..").SecretRecord) => void;
  * }} props
  */
-export default function({ secret, onSubmit }) {
+export default function ({ secret, onSubmit }) {
   const log = useLogger('SecretForm');
   const [secretForm, errors, onChanges, formValid] = useForm(
     secret?.toJS() || DEFAULT_SECRET
