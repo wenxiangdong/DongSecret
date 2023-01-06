@@ -20,7 +20,7 @@
     "immutable": "^4.0.0-rc.12",
     "less": "^3.10.3",
     "react": "^16.8.6",
-    "remax": "^2.0.0",
+    "remax": "^2.15.13",
     "rimraf": "^2.6.3",
     "unstated-next": "^1.1.0"
   },
